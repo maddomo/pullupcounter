@@ -25,6 +25,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.5",
     "@mui/material": "^7.3.5",
+    "@mui/x-charts": "^8.17.0",
     "@prisma/client": "^6.6.0",
     "@supabase/supabase-js": "^2.80.0",
     "@t3-oss/env-nextjs": "^0.12.0",
