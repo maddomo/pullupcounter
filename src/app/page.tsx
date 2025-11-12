@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-base-to-string */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -7,67 +12,12 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  CircularProgress,
 } from "@mui/material";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { api } from "../trpc/react"; // Passe den Import-Pfad an deine Struktur an
 
 type Period = "daily" | "weekly" | "monthly" | "yearly";
-
-interface DataPoint {
-  timestamp: Date;
-  count: number;
-}
-
-// Statische Dummy-Daten (keine Math.random für SSR-Kompatibilität)
-const staticDummyData = {
-  daily: [
-    { hour: 0, count: 5 },
-    { hour: 2, count: 8 },
-    { hour: 4, count: 3 },
-    { hour: 6, count: 7 },
-    { hour: 8, count: 12 },
-    { hour: 10, count: 15 },
-    { hour: 12, count: 10 },
-    { hour: 14, count: 18 },
-    { hour: 16, count: 14 },
-    { hour: 18, count: 20 },
-    { hour: 20, count: 16 },
-    { hour: 22, count: 9 },
-  ],
-  weekly: [
-    { day: "Mo", count: 45 },
-    { day: "Di", count: 38 },
-    { day: "Mi", count: 52 },
-    { day: "Do", count: 41 },
-    { day: "Fr", count: 48 },
-    { day: "Sa", count: 35 },
-    { day: "So", count: 29 },
-  ],
-  monthly: [
-    { date: "01.11", count: 45 },
-    { date: "04.11", count: 52 },
-    { date: "07.11", count: 38 },
-    { date: "10.11", count: 61 },
-    { date: "13.11", count: 48 },
-    { date: "16.11", count: 55 },
-    { date: "19.11", count: 43 },
-    { date: "22.11", count: 58 },
-    { date: "25.11", count: 47 },
-    { date: "28.11", count: 52 },
-  ],
-  yearly: [
-    { month: "Jan", count: 450 },
-    { month: "Feb", count: 520 },
-    { month: "Mär", count: 480 },
-    { month: "Apr", count: 610 },
-    { month: "Mai", count: 580 },
-    { month: "Jun", count: 550 },
-    { month: "Jul", count: 630 },
-    { month: "Aug", count: 590 },
-    { month: "Sep", count: 540 },
-    { month: "Okt", count: 600 },
-    { month: "Nov", count: 520 },
-  ],
-};
 
 const getPeriodLabel = (period: Period): string => {
   switch (period) {
@@ -86,6 +36,12 @@ export default function PullUpTracker() {
     setMounted(true);
   }, []);
 
+  // tRPC Query - wird automatisch neu geladen wenn sich 'period' ändert
+  const { data: queryData, isLoading, error } = api.pullups.getByPeriod.useQuery(
+    { period },
+    { enabled: mounted } // Query nur ausführen wenn Component mounted ist
+  );
+
   const handlePeriodChange = (
     _event: React.MouseEvent<HTMLElement>,
     newPeriod: Period | null
@@ -95,38 +51,57 @@ export default function PullUpTracker() {
     }
   };
 
-  // Daten basierend auf Zeitraum
-  const getData = () => {
-    switch (period) {
-      case "daily":
-        return {
-          labels: staticDummyData.daily.map(d => `${d.hour}:00`),
-          data: staticDummyData.daily.map(d => d.count),
-        };
-      case "weekly":
-        return {
-          labels: staticDummyData.weekly.map(d => d.day),
-          data: staticDummyData.weekly.map(d => d.count),
-        };
-      case "monthly":
-        return {
-          labels: staticDummyData.monthly.map(d => d.date),
-          data: staticDummyData.monthly.map(d => d.count),
-        };
-      case "yearly":
-        return {
-          labels: staticDummyData.yearly.map(d => d.month),
-          data: staticDummyData.yearly.map(d => d.count),
-        };
-    }
-  };
-
-  const { labels, data } = getData();
-  const total = data.reduce((sum, val) => sum + val, 0);
-
   if (!mounted) {
     return null;
   }
+
+  // Loading State
+  if (isLoading) {
+    return (
+      <Box 
+        sx={{ 
+          minHeight: "100vh",
+          bgcolor: "#0a0a0a",
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <CircularProgress sx={{ color: "#4CAF50" }} />
+      </Box>
+    );
+  }
+
+  // Error State
+  if (error) {
+    return (
+      <Box 
+        sx={{ 
+          minHeight: "100vh",
+          bgcolor: "#0a0a0a",
+          color: "white",
+          p: 4,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <Typography color="error">
+          Fehler beim Laden der Daten: {error.message}
+        </Typography>
+      </Box>
+    );
+  }
+
+  // Daten aus der Query verarbeiten
+      const labels: string[] = queryData?.map((d: { label: unknown; }) =>
+        d.label == null ? "" : String(d.label)
+      ) ?? [];
+      const data: number[] = queryData?.map((d: { value: unknown; }) => Number(d.value)) ?? [];
+      const total = data.reduce((sum: number, val: number) => sum + val, 0);
+      const average = data.length > 0 ? Math.round(total / data.length) : 0;
+      const maximum = data.length > 0 ? Math.max(...data) : 0;
 
   return (
     <Box 
@@ -208,7 +183,7 @@ export default function PullUpTracker() {
                 variant="h3"
                 sx={{ fontWeight: 600, color: "white" }}
               >
-                {Math.round(total / data.length)}
+                {average}
               </Typography>
               <Box
                 sx={{
@@ -243,7 +218,7 @@ export default function PullUpTracker() {
                 variant="h3"
                 sx={{ fontWeight: 600, color: "white" }}
               >
-                {Math.max(...data)}
+                {maximum}
               </Typography>
               <Box
                 sx={{
@@ -304,52 +279,67 @@ export default function PullUpTracker() {
             minHeight: 450,
           }}
         >
-          <LineChart
-            xAxis={[
-              {
-                data: labels.map((_, i) => i),
-                scaleType: "point",
-                valueFormatter: (value: unknown) => {
-                  const idx = typeof value === "number" ? value : Number(value);
-                  return Number.isFinite(idx) ? labels[idx] ?? "" : "";
+          {data.length === 0 ? (
+            <Box 
+              sx={{ 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center", 
+                height: 400 
+              }}
+            >
+              <Typography sx={{ color: "#666" }}>
+                Keine Daten für diesen Zeitraum verfügbar
+              </Typography>
+            </Box>
+          ) : (
+            <LineChart
+              xAxis={[
+                {
+                  data: labels.map((_, i) => i),
+                  scaleType: "point",
+                  valueFormatter: (value: unknown) => {
+                    const idx = typeof value === "number" ? value : Number(value);
+                    return Number.isFinite(idx) ? labels[idx] ?? "" : "";
+                  },
+                  tickLabelStyle: {
+                    fill: "#666",
+                    fontSize: 12,
+                  },
                 },
-                tickLabelStyle: {
-                  fill: "#666",
-                  fontSize: 12,
+              ]}
+              yAxis={[
+                {
+                  tickLabelStyle: {
+                    fill: "#666",
+                    fontSize: 12,
+                  },
                 },
-              },
-            ]}
-            yAxis={[
-              {
-                tickLabelStyle: {
-                  fill: "#666",
-                  fontSize: 12,
+              ]}
+              series={[
+                {
+                  data: data,
+                  area: true,
+                  color: "#4CAF50",
+                  curve: "monotoneX",
                 },
-              },
-            ]}
-            series={[
-              {
-                data: data,
-                area: true,
-                color: "#4CAF50",
-                curve: "monotoneX",
-              },
-            ]}
-            height={400}
-            margin={{ left: 50, right: 20, top: 20, bottom: 50 }}
-            sx={{
-              "& .MuiLineElement-root": {
-                strokeWidth: 2,
-              },
-              "& .MuiAreaElement-root": {
-                fillOpacity: 0.2,
-              },
-              "& .MuiChartsGrid-line": {
-                stroke: "#2a2a2a",
-              },
-            }}
-            grid={{ vertical: false, horizontal: true }}
-          />
+              ]}
+              height={400}
+              margin={{ left: 50, right: 20, top: 20, bottom: 50 }}
+              sx={{
+                "& .MuiLineElement-root": {
+                  strokeWidth: 2,
+                },
+                "& .MuiAreaElement-root": {
+                  fillOpacity: 0.2,
+                },
+                "& .MuiChartsGrid-line": {
+                  stroke: "#2a2a2a",
+                },
+              }}
+              grid={{ vertical: false, horizontal: true }}
+            />
+          )}
         </Card>
       </Box>
     </Box>
