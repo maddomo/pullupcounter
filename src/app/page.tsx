@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Box,
   Card,
@@ -13,11 +13,84 @@ import {
   ToggleButtonGroup,
   Typography,
   CircularProgress,
+  IconButton,
+  Button,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { api } from "../trpc/react"; // Passe den Import-Pfad an deine Struktur an
+import type { Period, PullupSession } from "./_types/period";
+import Add from "@mui/icons-material/Add";
+import Remove from "@mui/icons-material/Remove";
+import { StatsCard } from "./_components/StatsCard";
+import { AddPullUpsCard } from "./_components/AddPullUpsCard";
 
-type Period = "daily" | "weekly" | "monthly" | "yearly";
+
+// Utility Functions
+function startOfPeriod(period: Period): Date {
+  const now = new Date();
+  const d = new Date(now);
+
+  switch (period) {
+    case "daily":
+      d.setHours(0, 0, 0, 0);
+      break;
+    case "weekly": {
+      const day = d.getDay(); //Zeit wird auf 0:0:0:0 gesetzt
+      const diff = (day === 0 ? -6 : 1) - day; //berechnet abstand zwischen Tag und Montag
+      d.setDate(d.getDate() + diff); //Datum wird auf Montag der Woche gesetzt
+      d.setHours(0, 0, 0, 0);
+      break;
+    }
+    case "monthly":
+      d.setDate(1); //setzt Datum auf den ersten des Monats
+      d.setHours(0, 0, 0, 0);
+      break;
+    case "yearly":
+      d.setMonth(0, 1); //setze Datum auf 0=Januar, 1=1.Tag
+      d.setHours(0, 0, 0, 0);
+      break;
+  }
+
+  return d;
+}
+
+function formatLabel(date: Date, period: Period): string {
+  switch (period) {
+    case "daily":
+      return date.getHours().toString().padStart(2, "0") + ":00";
+    case "weekly":
+      return date.toLocaleDateString("de-DE", { weekday: "short" });
+    case "monthly":
+      return date.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
+    case "yearly":
+      return date.toLocaleDateString("de-DE", { month: "short" });
+  }
+}
+
+function filterAndGroupPullupData(allData: PullupSession[],period: Period): { label: string; value: number }[] {
+  const from = startOfPeriod(period);
+  const now = new Date();
+
+  // Filtern nach Periode
+  const filtered = allData.filter((row) => {
+    const date = new Date(row.createdAt);
+    return date >= from && date <= now;
+  });
+
+  // Gruppieren
+  const grouped: Record<string, number> = {};
+  for (const row of filtered) {
+    const date = new Date(row.createdAt);
+    const key = formatLabel(date, period);
+    grouped[key] = (grouped[key] ?? 0) + row.count;
+  }
+
+  return Object.entries(grouped).map(([label, value]) => ({ label, value }));
+}
+
+
 
 const getPeriodLabel = (period: Period): string => {
   switch (period) {
@@ -31,25 +104,67 @@ const getPeriodLabel = (period: Period): string => {
 export default function PullUpTracker() {
   const [period, setPeriod] = useState<Period>("weekly");
   const [mounted, setMounted] = useState(false);
+  const [ pullUpCount, setPullUpCount ] = useState<number>(0);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md")); 
+  const utils = api.useUtils();
+
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   // tRPC Query - wird automatisch neu geladen wenn sich 'period' ändert
-  const { data: queryData, isLoading, error } = api.pullups.getByPeriod.useQuery(
-    { period },
-    { enabled: mounted } // Query nur ausführen wenn Component mounted ist
-  );
+  const { data: allPullups, isLoading, error } = api.pullups.getAll.useQuery();
+  const addPullUps = api.pullups.addPullUps.useMutation({
+    onSuccess: () => {
+      void utils.pullups.getAll.invalidate();   // <-- Daten neu laden!
+    }
+  });
 
-  const handlePeriodChange = (
-    _event: React.MouseEvent<HTMLElement>,
-    newPeriod: Period | null
-  ) => {
+  // Berechne gefilterte und gruppierte Daten basierend auf der Periode
+  const chartData = useMemo(() => {
+    if (!allPullups) return [];
+    return filterAndGroupPullupData(allPullups, period);
+  }, [allPullups, period]);
+
+  // Berechne Statistiken
+  const stats = useMemo(() => {
+    if (!chartData.length) {
+      return { total: 0, average: 0, maximum: 0 };
+    }
+
+    const total = chartData.reduce((sum, item) => sum + item.value, 0);
+    const average = Math.round(total / chartData.length);
+    const maximum = Math.max(...chartData.map((item) => item.value));
+
+    return { total, average, maximum };
+  }, [chartData]);
+
+  function handlePeriodChange(_event: React.MouseEvent<HTMLElement>,newPeriod: Period | null) {
     if (newPeriod) {
       setPeriod(newPeriod);
     }
-  };
+  }
+
+  function handlePullUpCount(plus: boolean){
+    if(plus){
+      setPullUpCount(pullUpCount + 1);
+    }else {
+      setPullUpCount(pullUpCount -1 )
+    }
+  }
+
+  function handlePullUpSubmit(){
+    addPullUps.mutate({count: pullUpCount},{
+      onSuccess: () => {
+        setPullUpCount(0)
+      }
+    })
+  }
+
+  
+
 
   if (!mounted) {
     return null;
@@ -94,14 +209,8 @@ export default function PullUpTracker() {
     );
   }
 
-  // Daten aus der Query verarbeiten
-      const labels: string[] = queryData?.map((d: { label: unknown; }) =>
-        d.label == null ? "" : String(d.label)
-      ) ?? [];
-      const data: number[] = queryData?.map((d: { value: unknown; }) => Number(d.value)) ?? [];
-      const total = data.reduce((sum: number, val: number) => sum + val, 0);
-      const average = data.length > 0 ? Math.round(total / data.length) : 0;
-      const maximum = data.length > 0 ? Math.max(...data) : 0;
+  const labels = chartData.map((item) => item.label);
+  const values = chartData.map((item) => item.value);
 
   return (
     <Box 
@@ -125,112 +234,35 @@ export default function PullUpTracker() {
           Pull-Up Tracker
         </Typography>
 
+        
+        {isMobile && (
+          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb:3 }}>
+            <AddPullUpsCard
+              count={pullUpCount}
+              onIncrease={() => handlePullUpCount(true)}
+              onDecrease={() => handlePullUpCount(false)}
+              onSubmit={() => handlePullUpSubmit()}
+            />
+            
+          </Box>
+        )}
         {/* Stats Cards */}
         <Box sx={{ display: "flex", gap: 2, mb: 4, flexWrap: "wrap" }}>
-          <Card
-            sx={{
-              bgcolor: "#1a1a1a",
-              border: "1px solid #2a2a2a",
-              borderRadius: 2,
-              p: 2.5,
-              flex: "1 1 200px",
-              minWidth: 200,
-            }}
-          >
-            <Typography
-              variant="caption"
-              sx={{ color: "#888", mb: 1, display: "block" }}
-            >
-              {getPeriodLabel(period)}
-            </Typography>
-            <Box sx={{ display: "flex", alignItems: "baseline", gap: 1 }}>
-              <Typography
-                variant="h3"
-                sx={{ fontWeight: 600, color: "white" }}
-              >
-                {total}
-              </Typography>
-              <Box
-                sx={{
-                  width: 80,
-                  height: 30,
-                  background: "linear-gradient(90deg, #4CAF50 0%, #81C784 100%)",
-                  borderRadius: 1,
-                  opacity: 0.3,
-                }}
-              />
-            </Box>
-          </Card>
-
-          <Card
-            sx={{
-              bgcolor: "#1a1a1a",
-              border: "1px solid #2a2a2a",
-              borderRadius: 2,
-              p: 2.5,
-              flex: "1 1 200px",
-              minWidth: 200,
-            }}
-          >
-            <Typography
-              variant="caption"
-              sx={{ color: "#888", mb: 1, display: "block" }}
-            >
-              Durchschnitt
-            </Typography>
-            <Box sx={{ display: "flex", alignItems: "baseline", gap: 1 }}>
-              <Typography
-                variant="h3"
-                sx={{ fontWeight: 600, color: "white" }}
-              >
-                {average}
-              </Typography>
-              <Box
-                sx={{
-                  width: 80,
-                  height: 30,
-                  background: "linear-gradient(90deg, #2196F3 0%, #64B5F6 100%)",
-                  borderRadius: 1,
-                  opacity: 0.3,
-                }}
-              />
-            </Box>
-          </Card>
-
-          <Card
-            sx={{
-              bgcolor: "#1a1a1a",
-              border: "1px solid #2a2a2a",
-              borderRadius: 2,
-              p: 2.5,
-              flex: "1 1 200px",
-              minWidth: 200,
-            }}
-          >
-            <Typography
-              variant="caption"
-              sx={{ color: "#888", mb: 1, display: "block" }}
-            >
-              Maximum
-            </Typography>
-            <Box sx={{ display: "flex", alignItems: "baseline", gap: 1 }}>
-              <Typography
-                variant="h3"
-                sx={{ fontWeight: 600, color: "white" }}
-              >
-                {maximum}
-              </Typography>
-              <Box
-                sx={{
-                  width: 80,
-                  height: 30,
-                  background: "linear-gradient(90deg, #FF9800 0%, #FFB74D 100%)",
-                  borderRadius: 1,
-                  opacity: 0.3,
-                }}
-              />
-            </Box>
-          </Card>
+          <StatsCard
+            label={getPeriodLabel(period)}
+            value={stats.total}
+            gradient="green"
+          />
+          <StatsCard
+            label="Durchschnitt"
+            value={stats.average}
+            gradient="orange"
+          />
+          <StatsCard
+            label="Maximum"
+            value={stats.maximum}
+            gradient="blue"
+          />
         </Box>
 
         {/* Period Selector */}
@@ -277,9 +309,10 @@ export default function PullUpTracker() {
             borderRadius: 2,
             p: 3,
             minHeight: 450,
+            mb: 4
           }}
         >
-          {data.length === 0 ? (
+          {chartData.length === 0 ? (
             <Box 
               sx={{ 
                 display: "flex", 
@@ -318,7 +351,7 @@ export default function PullUpTracker() {
               ]}
               series={[
                 {
-                  data: data,
+                  data: values,
                   area: true,
                   color: "#4CAF50",
                   curve: "monotoneX",
@@ -341,6 +374,18 @@ export default function PullUpTracker() {
             />
           )}
         </Card>
+        {/* Hinzufügen */}
+        {!isMobile && (
+          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb:3 }}>
+            <AddPullUpsCard
+              count={pullUpCount}
+              onIncrease={() => handlePullUpCount(true)}
+              onDecrease={() => handlePullUpCount(false)}
+              onSubmit={() => handlePullUpSubmit()}
+            />
+            
+          </Box>
+        )}
       </Box>
     </Box>
   );
