@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-base-to-string */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
@@ -13,93 +8,18 @@ import {
   ToggleButtonGroup,
   Typography,
   CircularProgress,
-  IconButton,
-  Button,
   useMediaQuery,
   useTheme,
+  Button,
 } from "@mui/material";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { api } from "../trpc/react"; // Passe den Import-Pfad an deine Struktur an
 import type { Period, PullupSession } from "./_types/period";
-import Add from "@mui/icons-material/Add";
-import Remove from "@mui/icons-material/Remove";
 import { StatsCard } from "./_components/StatsCard";
 import { AddPullUpsCard } from "./_components/AddPullUpsCard";
 
 
 // Utility Functions
-function startOfPeriod(period: Period): Date {
-  const now = new Date();
-  const d = new Date(now);
-
-  switch (period) {
-    case "daily":
-      d.setHours(0, 0, 0, 0);
-      break;
-    case "weekly": {
-      const day = d.getDay(); //Zeit wird auf 0:0:0:0 gesetzt
-      const diff = (day === 0 ? -6 : 1) - day; //berechnet abstand zwischen Tag und Montag
-      d.setDate(d.getDate() + diff); //Datum wird auf Montag der Woche gesetzt
-      d.setHours(0, 0, 0, 0);
-      break;
-    }
-    case "monthly":
-      d.setDate(1); //setzt Datum auf den ersten des Monats
-      d.setHours(0, 0, 0, 0);
-      break;
-    case "yearly":
-      d.setMonth(0, 1); //setze Datum auf 0=Januar, 1=1.Tag
-      d.setHours(0, 0, 0, 0);
-      break;
-  }
-
-  return d;
-}
-
-function formatLabel(date: Date, period: Period): string {
-  switch (period) {
-    case "daily":
-      return date.getHours().toString().padStart(2, "0") + ":00";
-    case "weekly":
-      return date.toLocaleDateString("de-DE", { weekday: "short" });
-    case "monthly":
-      return date.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
-    case "yearly":
-      return date.toLocaleDateString("de-DE", { month: "short" });
-  }
-}
-
-function filterAndGroupPullupData(allData: PullupSession[],period: Period): { label: string; value: number }[] {
-  const from = startOfPeriod(period);
-  const now = new Date();
-
-  // Filtern nach Periode
-  const filtered = allData.filter((row) => {
-    const date = new Date(row.createdAt);
-    return date >= from && date <= now;
-  });
-
-  // Gruppieren
-  const grouped: Record<string, number> = {};
-  for (const row of filtered) {
-    const date = new Date(row.createdAt);
-    const key = formatLabel(date, period);
-    grouped[key] = (grouped[key] ?? 0) + row.count;
-  }
-
-  return Object.entries(grouped).map(([label, value]) => ({ label, value }));
-}
-
-
-
-const getPeriodLabel = (period: Period): string => {
-  switch (period) {
-    case "daily": return "Heute";
-    case "weekly": return "Diese Woche";
-    case "monthly": return "Dieser Monat";
-    case "yearly": return "Dieses Jahr";
-  }
-};
 
 export default function PullUpTracker() {
   const [period, setPeriod] = useState<Period>("weekly");
@@ -108,11 +28,114 @@ export default function PullUpTracker() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md")); 
   const utils = api.useUtils();
-
+  const [offset, setOffset] = useState(0);
+  const from = startOfPeriod(period, offset);
+  const periodLabel = getPeriodNavigationLabel(period, from);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  function startOfPeriod(period: Period, offset = 0): Date {
+      const now = new Date();
+      const d = new Date(now);
+    
+      switch (period) {
+        case "daily":
+          d.setDate(d.getDate() + offset);
+          d.setHours(0, 0, 0, 0);
+          break;
+    
+        case "weekly": {
+          const day = d.getDay();
+          const diff = (day === 0 ? -6 : 1) - day;
+          d.setDate(d.getDate() + diff + offset * 7);
+          d.setHours(0, 0, 0, 0);
+          break;
+        }
+    
+        case "monthly":
+          d.setMonth(d.getMonth() + offset);
+          d.setDate(1);
+          d.setHours(0, 0, 0, 0);
+          break;
+    
+        case "yearly":
+          d.setFullYear(d.getFullYear() + offset);
+          d.setMonth(0, 1);
+          d.setHours(0, 0, 0, 0);
+          break;
+      }
+    
+      return d;
+    }
+    
+    
+  function formatLabel(date: Date, period: Period): string {
+      switch (period) {
+        case "daily":
+          return date.getHours().toString().padStart(2, "0") + ":00";
+        case "weekly":
+          return date.toLocaleDateString("de-DE", { weekday: "short" });
+        case "monthly":
+          return date.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
+        case "yearly":
+          return date.toLocaleDateString("de-DE", { month: "short" });
+      }
+    }
+    
+  function filterAndGroupPullupData(allData: PullupSession[], period: Period, offset: number): { label: string; value: number }[] {
+      const from = startOfPeriod(period, offset);
+      const to = endOfPeriod(period, offset);
+    
+      // Filtern nach Periode
+      const filtered = allData.filter((row) => {
+        const date = new Date(row.createdAt);
+        return date >= from && date <= to;
+      });
+    
+      // Gruppieren
+      const grouped: Record<string, number> = {};
+      for (const row of filtered) {
+        const date = new Date(row.createdAt);
+        const key = formatLabel(date, period);
+        grouped[key] = (grouped[key] ?? 0) + row.count;
+      }
+    
+      return Object.entries(grouped).map(([label, value]) => ({ label, value }));
+    }
+
+  function getPeriodNavigationLabel(period: Period, date: Date) {
+  switch (period) {
+    case "daily":
+      return date.toLocaleDateString("de-DE");
+
+    case "weekly":
+      const end = new Date(date);
+      end.setDate(end.getDate() + 6);
+      return `${date.toLocaleDateString("de-DE")} – ${end.toLocaleDateString("de-DE")}`;
+
+    case "monthly":
+      return date.toLocaleDateString("de-DE", {
+        month: "long",
+        year: "numeric",
+      });
+
+    case "yearly":
+      return date.getFullYear().toString();
+  }
+}
+    
+    
+    
+  const getPeriodLabel = (period: Period): string => {
+      switch (period) {
+        case "daily": return "Heute";
+        case "weekly": return "Diese Woche";
+        case "monthly": return "Dieser Monat";
+        case "yearly": return "Dieses Jahr";
+      }
+    };
 
   // tRPC Query - wird automatisch neu geladen wenn sich 'period' ändert
   const { data: allPullups, isLoading, error } = api.pullups.getAll.useQuery();
@@ -125,8 +148,8 @@ export default function PullUpTracker() {
   // Berechne gefilterte und gruppierte Daten basierend auf der Periode
   const chartData = useMemo(() => {
     if (!allPullups) return [];
-    return filterAndGroupPullupData(allPullups, period);
-  }, [allPullups, period]);
+    return filterAndGroupPullupData(allPullups, period, offset);
+  }, [allPullups, period, offset]);
 
   // Berechne Statistiken
   const stats = useMemo(() => {
@@ -163,8 +186,37 @@ export default function PullUpTracker() {
     })
   }
 
-  
+  function endOfPeriod(period: Period, offset = 0): Date {
+  const start = startOfPeriod(period, offset);
+  const end = new Date(start);
 
+  switch (period) {
+    case "daily":
+      end.setHours(23, 59, 59, 999);
+      break;
+
+    case "weekly":
+      end.setDate(end.getDate() + 6);
+      end.setHours(23, 59, 59, 999);
+      break;
+
+    case "monthly":
+      end.setMonth(end.getMonth() + 1);
+      end.setDate(0); // letzter Tag des Monats
+      end.setHours(23, 59, 59, 999);
+      break;
+
+    case "yearly":
+      end.setFullYear(end.getFullYear() + 1);
+      end.setMonth(0, 0); // 31.12.
+      end.setHours(23, 59, 59, 999);
+      break;
+  }
+
+  return end;
+}
+
+  
 
   if (!mounted) {
     return null;
@@ -299,6 +351,28 @@ export default function PullUpTracker() {
             <ToggleButton value="monthly">Monatlich</ToggleButton>
             <ToggleButton value="yearly">Jährlich</ToggleButton>
           </ToggleButtonGroup>
+        </Box>
+
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 2, mb: 2 }}>
+          <Button 
+            variant="outlined"
+            sx={{ color: "white", borderColor: "#2a2a2a" }}
+            onClick={() => setOffset(offset - 1)}
+          >
+            ←
+          </Button>
+
+          <Typography sx={{ color: "white", fontSize: 18, fontWeight: 500 }}>
+            {periodLabel}
+          </Typography>
+
+          <Button
+            variant="outlined"
+            sx={{ color: "white", borderColor: "#2a2a2a" }}
+            onClick={() => setOffset(offset + 1)}
+          >
+            →
+          </Button>
         </Box>
 
         {/* Chart */}
