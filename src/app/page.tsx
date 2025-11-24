@@ -461,10 +461,18 @@ export default function PullUpTracker() {
               },
             }}
           >
-            <ToggleButton value="daily">Täglich</ToggleButton>
-            <ToggleButton value="weekly">Wöchentlich</ToggleButton>
-            <ToggleButton value="monthly">Monatlich</ToggleButton>
-            <ToggleButton value="yearly">Jährlich</ToggleButton>
+            <ToggleButton value="daily">
+              {isMobile ? "Tag" : "Täglich"}
+            </ToggleButton>
+            <ToggleButton value="weekly">
+              {isMobile ? "Woche" : "Wöchentlich"}
+            </ToggleButton>
+            <ToggleButton value="monthly">
+              {isMobile ? "Monat" : "Monatlich"}
+            </ToggleButton>
+            <ToggleButton value="yearly">
+              {isMobile ? "Jahr" : "Jährlich"}
+            </ToggleButton>
           </ToggleButtonGroup>
         </Box>
 
@@ -495,7 +503,7 @@ export default function PullUpTracker() {
             bgcolor: "#1a1a1a",
             border: "1px solid #2a2a2a",
             borderRadius: 2,
-            p: 3,
+            p: { xs: 1, sm: 3 },
             minHeight: 450,
             mb: 4
           }}
@@ -525,7 +533,8 @@ export default function PullUpTracker() {
                   },
                   tickLabelStyle: {
                     fill: "#666",
-                    fontSize: 12,
+                    fontSize: isMobile ? 10 : 12,
+                    
                   },
                 },
               ]}
@@ -533,7 +542,7 @@ export default function PullUpTracker() {
                 {
                   tickLabelStyle: {
                     fill: "#666",
-                    fontSize: 12,
+                    fontSize: isMobile ? 10 : 12,
                   },
                 },
               ]}
@@ -545,8 +554,13 @@ export default function PullUpTracker() {
                   curve: "monotoneX",
                 },
               ]}
-              height={400}
-              margin={{ left: 50, right: 20, top: 20, bottom: 50 }}
+              height={isMobile ? 400 : 400} 
+              margin={{ 
+                left: isMobile ? 0 : 50, 
+                right: isMobile ? 10 : 20,
+                top: 20, 
+                bottom: isMobile ? 0 : 50
+              }}
               sx={{
                 "& .MuiLineElement-root": {
                   strokeWidth: 2,
