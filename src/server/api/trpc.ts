@@ -6,10 +6,10 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-
+import { createClient } from "@supabase/supabase-js";
 import { db } from "~/server/db";
 
 /**
@@ -25,8 +25,39 @@ import { db } from "~/server/db";
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
+  // Supabase Client erstellen
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      auth: {
+        persistSession: false,
+      },
+    }
+  );
+
+  // Authorization Header auslesen
+  const authHeader = opts.headers.get("authorization");
+  let user = null;
+  let session = null;
+
+  if (authHeader?.startsWith("Bearer ")) {
+    const token = authHeader.substring(7);
+    
+    // User mit Token validieren
+    const { data, error } = await supabase.auth.getUser(token);
+    
+    if (!error && data.user) {
+      user = data.user;
+      session = { access_token: token };
+    }
+  }
+
   return {
     db,
+    supabase,
+    session,
+    user,
     ...opts,
   };
 };
@@ -104,5 +135,29 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+/**
+ * Protected (authenticated) procedure
+ *
+ * If you want a query or mutation to ONLY be accessible to logged in users, use this. It verifies
+ * the session is valid and guarantees `ctx.session` and `ctx.user` are non-null.
+ *
+ * @see https://trpc.io/docs/procedures
+ */
+export const protectedProcedure = t.procedure
+  .use(timingMiddleware)
+  .use(({ ctx, next }) => {
+    if (!ctx.session || !ctx.user) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    return next({
+      ctx: {
+        ...ctx,
+        // infers the `session` and `user` as non-nullable
+        session: ctx.session,
+        user: ctx.user,
+      },
+    });
+  });
 
 export const router = t.router;

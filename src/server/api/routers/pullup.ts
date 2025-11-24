@@ -1,21 +1,25 @@
-import { router, publicProcedure } from "../trpc";
+import { router, protectedProcedure } from "../trpc";
 import { z } from "zod";
-import { supabase } from '../../../supabase/client'
 
 export const pullupsRouter = router({
 
-  getAll: publicProcedure.query(async () => {
-    const { data, error } = await supabase.from("PullupSession").select("count, createdAt").order("createdAt", {ascending: true});
+  getAll: protectedProcedure.query(async ( { ctx } ) => {
+    const { supabase, user } = ctx; 
+    const { data, error } = await supabase
+      .from("PullupSession")
+      .select("count, createdAt")
+      .eq("userId", user.id)
+      .order("createdAt", {ascending: true});
 
     if(error) throw new Error(error.message);
 
     return data ?? [];
   }),
 
-  addPullUps: publicProcedure.input(z.object({
+  addPullUps: protectedProcedure.input(z.object({
     count: z.number().min(1)
   })).mutation(async ( { input, ctx} ) => {
-    const userId = process.env.DEFAULT_USER_ID;
+    const userId = ctx.user?.id;
     if(!userId){
       return
     }

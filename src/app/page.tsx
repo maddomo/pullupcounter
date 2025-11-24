@@ -11,147 +11,167 @@ import {
   useMediaQuery,
   useTheme,
   Button,
+  Stack,
+  Backdrop,
+  Paper,
 } from "@mui/material";
 import { LineChart } from "@mui/x-charts/LineChart";
-import { api } from "../trpc/react"; // Passe den Import-Pfad an deine Struktur an
+import { useRouter } from "next/navigation";
+import { api } from "../trpc/react";
 import type { Period, PullupSession } from "./_types/period";
 import { StatsCard } from "./_components/StatsCard";
 import { AddPullUpsCard } from "./_components/AddPullUpsCard";
-
-
-// Utility Functions
+import { supabase } from "~/supabase/client";
 
 export default function PullUpTracker() {
   const [period, setPeriod] = useState<Period>("weekly");
   const [mounted, setMounted] = useState(false);
-  const [ pullUpCount, setPullUpCount ] = useState<number>(0);
+  const [pullUpCount, setPullUpCount] = useState<number>(0);
+  const [hasSession, setHasSession] = useState<boolean>(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md")); 
   const utils = api.useUtils();
   const [offset, setOffset] = useState(0);
+  const router = useRouter();
   const from = startOfPeriod(period, offset);
   const periodLabel = getPeriodNavigationLabel(period, from);
 
   useEffect(() => {
-    setMounted(true);
+    async function checkSession() {
+      const { data } = await supabase.auth.getSession();
+      setHasSession(!!data.session);
+      setMounted(true); // ERST nach Session-Check auf mounted setzen
+    }
+    void checkSession();
   }, []);
 
+  async function handleLogout() {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.log(error);
+    } else {
+      setHasSession(false);
+      // Daten invalidieren, damit sie neu geladen werden
+      void utils.pullups.getAll.invalidate();
+    }
+  }
+
   function startOfPeriod(period: Period, offset = 0): Date {
-      const now = new Date();
-      const d = new Date(now);
-    
-      switch (period) {
-        case "daily":
-          d.setDate(d.getDate() + offset);
-          d.setHours(0, 0, 0, 0);
-          break;
-    
-        case "weekly": {
-          const day = d.getDay();
-          const diff = (day === 0 ? -6 : 1) - day;
-          d.setDate(d.getDate() + diff + offset * 7);
-          d.setHours(0, 0, 0, 0);
-          break;
-        }
-    
-        case "monthly":
-          d.setMonth(d.getMonth() + offset);
-          d.setDate(1);
-          d.setHours(0, 0, 0, 0);
-          break;
-    
-        case "yearly":
-          d.setFullYear(d.getFullYear() + offset);
-          d.setMonth(0, 1);
-          d.setHours(0, 0, 0, 0);
-          break;
+    const now = new Date();
+    const d = new Date(now);
+  
+    switch (period) {
+      case "daily":
+        d.setDate(d.getDate() + offset);
+        d.setHours(0, 0, 0, 0);
+        break;
+  
+      case "weekly": {
+        const day = d.getDay();
+        const diff = (day === 0 ? -6 : 1) - day;
+        d.setDate(d.getDate() + diff + offset * 7);
+        d.setHours(0, 0, 0, 0);
+        break;
       }
-    
-      return d;
+  
+      case "monthly":
+        d.setMonth(d.getMonth() + offset);
+        d.setDate(1);
+        d.setHours(0, 0, 0, 0);
+        break;
+  
+      case "yearly":
+        d.setFullYear(d.getFullYear() + offset);
+        d.setMonth(0, 1);
+        d.setHours(0, 0, 0, 0);
+        break;
     }
-    
-    
+  
+    return d;
+  }
+  
   function formatLabel(date: Date, period: Period): string {
-      switch (period) {
-        case "daily":
-          return date.getHours().toString().padStart(2, "0") + ":00";
-        case "weekly":
-          return date.toLocaleDateString("de-DE", { weekday: "short" });
-        case "monthly":
-          return date.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
-        case "yearly":
-          return date.toLocaleDateString("de-DE", { month: "short" });
-      }
+    switch (period) {
+      case "daily":
+        return date.getHours().toString().padStart(2, "0") + ":00";
+      case "weekly":
+        return date.toLocaleDateString("de-DE", { weekday: "short" });
+      case "monthly":
+        return date.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
+      case "yearly":
+        return date.toLocaleDateString("de-DE", { month: "short" });
     }
-    
+  }
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function filterAndGroupPullupData(allData: PullupSession[], period: Period, offset: number): { label: string; value: number }[] {
-      const from = startOfPeriod(period, offset);
-      const to = endOfPeriod(period, offset);
-    
-      // Filtern nach Periode
-      const filtered = allData.filter((row) => {
-        const date = new Date(row.createdAt);
-        return date >= from && date <= to;
-      });
-    
-      // Gruppieren
-      const grouped: Record<string, number> = {};
-      for (const row of filtered) {
-        const date = new Date(row.createdAt);
-        const key = formatLabel(date, period);
-        grouped[key] = (grouped[key] ?? 0) + row.count;
-      }
-    
-      return Object.entries(grouped).map(([label, value]) => ({ label, value }));
+    const from = startOfPeriod(period, offset);
+    const to = endOfPeriod(period, offset);
+  
+    const filtered = allData.filter((row) => {
+      const date = new Date(row.createdAt);
+      return date >= from && date <= to;
+    });
+  
+    const grouped: Record<string, number> = {};
+    for (const row of filtered) {
+      const date = new Date(row.createdAt);
+      const key = formatLabel(date, period);
+      grouped[key] = (grouped[key] ?? 0) + row.count;
     }
+  
+    return Object.entries(grouped).map(([label, value]) => ({ label, value }));
+  }
 
   function getPeriodNavigationLabel(period: Period, date: Date) {
-  switch (period) {
-    case "daily":
-      return date.toLocaleDateString("de-DE");
+    switch (period) {
+      case "daily":
+        return date.toLocaleDateString("de-DE");
 
-    case "weekly":
-      const end = new Date(date);
-      end.setDate(end.getDate() + 6);
-      return `${date.toLocaleDateString("de-DE")} – ${end.toLocaleDateString("de-DE")}`;
+      case "weekly":
+        const end = new Date(date);
+        end.setDate(end.getDate() + 6);
+        return `${date.toLocaleDateString("de-DE")} – ${end.toLocaleDateString("de-DE")}`;
 
-    case "monthly":
-      return date.toLocaleDateString("de-DE", {
-        month: "long",
-        year: "numeric",
-      });
+      case "monthly":
+        return date.toLocaleDateString("de-DE", {
+          month: "long",
+          year: "numeric",
+        });
 
-    case "yearly":
-      return date.getFullYear().toString();
+      case "yearly":
+        return date.getFullYear().toString();
+    }
   }
-}
-    
-    
-    
+  
   const getPeriodLabel = (period: Period): string => {
-      switch (period) {
-        case "daily": return "Heute";
-        case "weekly": return "Diese Woche";
-        case "monthly": return "Dieser Monat";
-        case "yearly": return "Dieses Jahr";
-      }
-    };
+    switch (period) {
+      case "daily": return "Heute";
+      case "weekly": return "Diese Woche";
+      case "monthly": return "Dieser Monat";
+      case "yearly": return "Dieses Jahr";
+    }
+  };
 
-  // tRPC Query - wird automatisch neu geladen wenn sich 'period' ändert
-  const { data: allPullups, isLoading, error } = api.pullups.getAll.useQuery();
+  const { data: allPullups, isLoading, error } = api.pullups.getAll.useQuery(
+    undefined,
+    {
+      enabled: hasSession && mounted,
+      retry: false,
+    }
+  );
+
   const addPullUps = api.pullups.addPullUps.useMutation({
     onSuccess: () => {
-      void utils.pullups.getAll.invalidate();   // <-- Daten neu laden!
+      void utils.pullups.getAll.invalidate();
     }
   });
 
-  // Berechne gefilterte und gruppierte Daten basierend auf der Periode
   const chartData = useMemo(() => {
     if (!allPullups) return [];
     return filterAndGroupPullupData(allPullups, period, offset);
-  }, [allPullups, period, offset]);
+  }, [allPullups, period, offset, filterAndGroupPullupData]);
 
-  // Berechne Statistiken
   const stats = useMemo(() => {
     if (!chartData.length) {
       return { total: 0, average: 0, maximum: 0 };
@@ -164,63 +184,77 @@ export default function PullUpTracker() {
     return { total, average, maximum };
   }, [chartData]);
 
-  function handlePeriodChange(_event: React.MouseEvent<HTMLElement>,newPeriod: Period | null) {
+  function handlePeriodChange(_event: React.MouseEvent<HTMLElement>, newPeriod: Period | null) {
     if (newPeriod) {
       setPeriod(newPeriod);
     }
   }
 
-  function handlePullUpCount(plus: boolean){
-    if(plus){
+  function handlePullUpCount(plus: boolean) {
+    if (plus) {
       setPullUpCount(pullUpCount + 1);
-    }else {
-      setPullUpCount(pullUpCount -1 )
+    } else {
+      setPullUpCount(pullUpCount - 1);
     }
   }
 
-  function handlePullUpSubmit(){
-    addPullUps.mutate({count: pullUpCount},{
+  function handlePullUpSubmit() {
+    addPullUps.mutate({ count: pullUpCount }, {
       onSuccess: () => {
-        setPullUpCount(0)
+        setPullUpCount(0);
       }
-    })
+    });
   }
 
   function endOfPeriod(period: Period, offset = 0): Date {
-  const start = startOfPeriod(period, offset);
-  const end = new Date(start);
+    const start = startOfPeriod(period, offset);
+    const end = new Date(start);
 
-  switch (period) {
-    case "daily":
-      end.setHours(23, 59, 59, 999);
-      break;
+    switch (period) {
+      case "daily":
+        end.setHours(23, 59, 59, 999);
+        break;
 
-    case "weekly":
-      end.setDate(end.getDate() + 6);
-      end.setHours(23, 59, 59, 999);
-      break;
+      case "weekly":
+        end.setDate(end.getDate() + 6);
+        end.setHours(23, 59, 59, 999);
+        break;
 
-    case "monthly":
-      end.setMonth(end.getMonth() + 1);
-      end.setDate(0); // letzter Tag des Monats
-      end.setHours(23, 59, 59, 999);
-      break;
+      case "monthly":
+        end.setMonth(end.getMonth() + 1);
+        end.setDate(0);
+        end.setHours(23, 59, 59, 999);
+        break;
 
-    case "yearly":
-      end.setFullYear(end.getFullYear() + 1);
-      end.setMonth(0, 0); // 31.12.
-      end.setHours(23, 59, 59, 999);
-      break;
+      case "yearly":
+        end.setFullYear(end.getFullYear() + 1);
+        end.setMonth(0, 0);
+        end.setHours(23, 59, 59, 999);
+        break;
+    }
+
+    return end;
   }
-
-  return end;
-}
-
-  
 
   if (!mounted) {
-    return null;
+     return (
+      <Box 
+        sx={{ 
+          minHeight: "100vh",
+          bgcolor: "#0a0a0a",
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <CircularProgress sx={{ color: "#4CAF50" }} />
+      </Box>
+    );
   }
+
+  // Check if user is unauthorized
+  const isUnauthorized = !hasSession || error?.data?.code === 'UNAUTHORIZED';
 
   // Loading State
   if (isLoading) {
@@ -240,20 +274,17 @@ export default function PullUpTracker() {
     );
   }
 
-  // Error State
-  if (error) {
+  // Other errors
+  if (error && !isUnauthorized) {
     return (
-      <Box 
-        sx={{ 
-          minHeight: "100vh",
-          bgcolor: "#0a0a0a",
-          color: "white",
-          p: 4,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
+      <Box sx={{ 
+        minHeight: "100vh",
+        bgcolor: "#0a0a0a",
+        color: "white",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
         <Typography color="error">
           Fehler beim Laden der Daten: {error.message}
         </Typography>
@@ -270,35 +301,120 @@ export default function PullUpTracker() {
         minHeight: "100vh",
         bgcolor: "#0a0a0a",
         color: "white",
-        p: 4
+        p: 4,
+        position: "relative"
       }}
     >
-      <Box sx={{ maxWidth: 1400, mx: "auto" }}>
-        {/* Header */}
-        <Typography
-          variant="h4"
+      {/* Login Overlay - nur wenn unauthorized */}
+      {isUnauthorized && (
+        <Backdrop
+          open={true}
           sx={{
-            mb: 4,
-            fontWeight: 600,
-            color: "white",
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            backdropFilter: "blur(8px)",
+            bgcolor: "rgba(0, 0, 0, 0.7)",
           }}
         >
-          Pull-Up Tracker
-        </Typography>
+          <Paper
+            elevation={24}
+            sx={{
+              p: 4,
+              bgcolor: "#1a1a1a",
+              border: "1px solid #2a2a2a",
+              borderRadius: 3,
+              maxWidth: 400,
+              textAlign: "center",
+            }}
+          >
+            <Typography
+              variant="h5"
+              sx={{
+                mb: 2,
+                fontWeight: 600,
+                color: "white",
+              }}
+            >
+              🔒 Nicht angemeldet
+            </Typography>
+            <Typography
+              sx={{
+                mb: 3,
+                color: "#888",
+              }}
+            >
+              Bitte melde dich an, um deine Pull-Ups zu tracken und deine Statistiken zu sehen.
+            </Typography>
+            <Button
+              variant="contained"
+              size="large"
+              fullWidth
+              onClick={() => router.push("/login")}
+              sx={{
+                bgcolor: "#4CAF50",
+                color: "white",
+                py: 1.5,
+                fontSize: 16,
+                fontWeight: 600,
+                "&:hover": {
+                  bgcolor: "#45a049",
+                },
+              }}
+            >
+              Zum Login
+            </Button>
+          </Paper>
+        </Backdrop>
+      )}
 
-        
+      {/* Main Content - immer sichtbar, aber gebluert wenn nicht angemeldet */}
+      <Box 
+        sx={{ 
+          maxWidth: 1400, 
+          mx: "auto",
+          filter: isUnauthorized ? "blur(4px)" : "none",
+          pointerEvents: isUnauthorized ? "none" : "auto",
+        }}
+      >
+        <Stack direction="row" display="flex" justifyContent="space-between" alignItems="center">
+          <Typography
+            variant="h4"
+            sx={{
+              mb: 4,
+              fontWeight: 600,
+              color: "white",
+            }}
+          >
+            Pull-Up Tracker
+          </Typography>
+          {!isUnauthorized && (
+            <Button 
+              sx={{
+                bgcolor: "#2a2a2a",
+                color: "white",
+                minWidth: 100,
+                height: 48,
+                "&:hover": {
+                  bgcolor: "red",
+                }
+              }}
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          )}
+        </Stack>
+
         {isMobile && (
-          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb:3 }}>
+          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb: 3 }}>
             <AddPullUpsCard
               count={pullUpCount}
               onIncrease={() => handlePullUpCount(true)}
               onDecrease={() => handlePullUpCount(false)}
-              onSubmit={() => handlePullUpSubmit()}
+              onSubmit={handlePullUpSubmit}
             />
-            
           </Box>
         )}
-        {/* Stats Cards */}
+
         <Box sx={{ display: "flex", gap: 2, mb: 4, flexWrap: "wrap" }}>
           <StatsCard
             label={getPeriodLabel(period)}
@@ -317,7 +433,6 @@ export default function PullUpTracker() {
           />
         </Box>
 
-        {/* Period Selector */}
         <Box sx={{ mb: 3, display: "flex", justifyContent: "center" }}>
           <ToggleButtonGroup
             value={period}
@@ -375,7 +490,6 @@ export default function PullUpTracker() {
           </Button>
         </Box>
 
-        {/* Chart */}
         <Card
           sx={{
             bgcolor: "#1a1a1a",
@@ -448,16 +562,15 @@ export default function PullUpTracker() {
             />
           )}
         </Card>
-        {/* Hinzufügen */}
+
         {!isMobile && (
-          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb:3 }}>
+          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb: 3 }}>
             <AddPullUpsCard
               count={pullUpCount}
               onIncrease={() => handlePullUpCount(true)}
               onDecrease={() => handlePullUpCount(false)}
-              onSubmit={() => handlePullUpSubmit()}
+              onSubmit={handlePullUpSubmit}
             />
-            
           </Box>
         )}
       </Box>
