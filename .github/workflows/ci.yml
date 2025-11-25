@@ -36,3 +36,12 @@ jobs:
 
       - name: Build
         run: npm run build
+      
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli
+
+      - name: Start Next.js Server
+        run: npm start &
+
+      - name: Run Lighthouse CI
+        run: lhci autorun
