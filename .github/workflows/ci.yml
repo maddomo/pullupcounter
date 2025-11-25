@@ -40,16 +40,12 @@ jobs:
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli
 
-      - name: Start Next.js Server
-        run: npm start &
-
-      - name: Collect Lighthouse Reports
-        run: lhci collect
-
-      - name: Run Lighthouse Assertions
-        run: lhci assert || echo "Accessibility Score < 0.9"
+      - name: Run Lighthouse CI
+        run: lhci autorun
+        continue-on-error: true
 
       - name: Upload Lighthouse Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lhci-reports
