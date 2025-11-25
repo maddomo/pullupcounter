@@ -40,7 +40,8 @@ export function AddPullUpsCard({
           </Typography>
 
           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 3, mb: 3 }}>
-            <IconButton 
+            <IconButton
+              aria-label="remove"
               onClick={() => onDecrease()}
               disabled={count <= 0}
               sx={{
@@ -73,6 +74,7 @@ export function AddPullUpsCard({
             </Typography>
 
             <IconButton 
+              aria-label="add"
               onClick={() => onIncrease()}
               sx={{
                 bgcolor: "#2a2a2a",

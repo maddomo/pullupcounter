@@ -350,15 +350,14 @@ export default function PullUpTracker() {
               fullWidth
               onClick={() => router.push("/login")}
               sx={{
-                bgcolor: "#4CAF50",
-                color: "white",
-                py: 1.5,
-                fontSize: 16,
-                fontWeight: 600,
-                "&:hover": {
-                  bgcolor: "#45a049",
-                },
-              }}
+                  bgcolor: "#2a2a2a",
+                  color: "white",
+                  minWidth: 100,
+                  height: 48,
+                  "&:hover": {
+                    bgcolor: "#333",
+                  }
+              }} 
             >
               Zum Login
             </Button>
@@ -517,7 +516,7 @@ export default function PullUpTracker() {
                 height: 400 
               }}
             >
-              <Typography sx={{ color: "#666" }}>
+              <Typography sx={{ color: "#888" }}>
                 Keine Daten für diesen Zeitraum verfügbar
               </Typography>
             </Box>
