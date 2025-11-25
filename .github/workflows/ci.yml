@@ -49,9 +49,26 @@ jobs:
         run: lhci autorun
         continue-on-error: true
 
+      - name: List Report Files
+        run: |
+          echo "Report files found:"
+          ls -la lhci-results/*.html || echo "No HTML files found"
+
       - name: Create Reports Index
         run: |
-          cat > lhci-results/index.html << 'EOF'
+          cd lhci-results
+          
+          # Create manifest with all report files
+          echo "window.LIGHTHOUSE_REPORTS = [" > reports-manifest.js
+          for file in *.html; do
+            if [ "$file" != "index.html" ] && [ "$file" != "*.html" ]; then
+              echo "  '$file'," >> reports-manifest.js
+            fi
+          done
+          echo "];" >> reports-manifest.js
+          
+          # Create index.html
+          cat > index.html << 'EOF'
           <!DOCTYPE html>
           <html lang="de">
           <head>
@@ -96,7 +113,6 @@ jobs:
                 border-radius: 12px;
                 padding: 1.5rem;
                 transition: all 0.3s ease;
-                cursor: pointer;
               }
               .report-card:hover {
                 transform: translateY(-4px);
@@ -111,6 +127,7 @@ jobs:
               .report-card p {
                 color: #718096;
                 font-size: 0.9rem;
+                margin-bottom: 0.5rem;
               }
               .report-link {
                 display: inline-block;
@@ -126,6 +143,10 @@ jobs:
               .report-link:hover {
                 background: #5568d3;
               }
+              .timestamp {
+                color: #a0aec0;
+                font-size: 0.85rem;
+              }
             </style>
           </head>
           <body>
@@ -136,41 +157,41 @@ jobs:
               <div class="report-grid" id="reports"></div>
             </div>
             
+            <script src="reports-manifest.js"></script>
             <script>
-              const reports = [];
-              const links = document.querySelectorAll('a[href$=".html"]');
+              const grid = document.getElementById('reports');
               
-              // Find all HTML reports
-              fetch('.')
-                .then(r => r.text())
-                .then(html => {
-                  const parser = new DOMParser();
-                  const doc = parser.parseFromString(html, 'text/html');
-                  const files = Array.from(doc.querySelectorAll('a'))
-                    .map(a => a.getAttribute('href'))
-                    .filter(href => href && href.includes('lhr-') && href.endsWith('.html'));
+              if (!window.LIGHTHOUSE_REPORTS || window.LIGHTHOUSE_REPORTS.length === 0) {
+                grid.innerHTML = '<p style="color: #718096;">Keine Reports gefunden. Bitte warten Sie auf den nächsten Build.</p>';
+              } else {
+                window.LIGHTHOUSE_REPORTS.forEach(file => {
+                  // Determine URL from filename
+                  let url = '/';
+                  let pageName = 'Homepage';
                   
-                  const grid = document.getElementById('reports');
-                  
-                  if (files.length === 0) {
-                    grid.innerHTML = '<p style="color: #718096;">Keine Reports gefunden. Bitte warten Sie auf den nächsten Build.</p>';
-                    return;
+                  if (file.includes('login') || file.includes('_login_')) {
+                    url = '/login';
+                    pageName = 'Login Seite';
+                  } else if (file.includes('localhost_3000_')) {
+                    // Extract path from filename
+                    const match = file.match(/localhost_3000_(.+?)_\d{4}/);
+                    if (match && match[1]) {
+                      url = '/' + match[1].replace(/_/g, '/');
+                      pageName = url;
+                    }
                   }
                   
-                  files.forEach(file => {
-                    const filename = file.split('/').pop();
-                    const url = filename.includes('login') ? '/login' : '/';
-                    
-                    const card = document.createElement('div');
-                    card.className = 'report-card';
-                    card.innerHTML = `
-                      <h3>📄 ${url}</h3>
-                      <p>Lighthouse Report</p>
-                      <a href="${file}" class="report-link">Report öffnen →</a>
-                    `;
-                    grid.appendChild(card);
-                  });
+                  const card = document.createElement('div');
+                  card.className = 'report-card';
+                  card.innerHTML = `
+                    <h3>📄 ${pageName}</h3>
+                    <p>URL: ${url}</p>
+                    <p class="timestamp">Report: ${file}</p>
+                    <a href="${file}" class="report-link" target="_blank">Report öffnen →</a>
+                  `;
+                  grid.appendChild(card);
                 });
+              }
             </script>
           </body>
           </html>
