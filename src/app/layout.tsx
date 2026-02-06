@@ -4,6 +4,8 @@ import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import { Box } from "@mui/material";
+import ResponsiveAppBar from "./_components/navbar";
 
 export const metadata: Metadata = {
   title: "Fitness Analytics",
@@ -22,7 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+            <ResponsiveAppBar />
+            {children}
+    </TRPCReactProvider>
       </body>
     </html>
   );

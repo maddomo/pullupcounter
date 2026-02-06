@@ -55,40 +55,10 @@ export default function ModernLogin() {
       justifyContent="center"
       sx={{ 
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)",
         position: "relative",
         overflow: "hidden",
-        p: 3,
       }}
     >
-      {/* Dekorative Hintergrund-Elemente */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: "20%",
-          left: "15%",
-          width: "400px",
-          height: "400px",
-          background: "radial-gradient(circle, rgba(80,80,80,0.1) 0%, transparent 70%)",
-          borderRadius: "50%",
-          filter: "blur(60px)",
-          pointerEvents: "none",
-        }}
-      />
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: "20%",
-          right: "15%",
-          width: "350px",
-          height: "350px",
-          background: "radial-gradient(circle, rgba(100,100,100,0.1) 0%, transparent 70%)",
-          borderRadius: "50%",
-          filter: "blur(60px)",
-          pointerEvents: "none",
-        }}
-      />
-
       {/* Login Card */}
       <Card
         sx={{
@@ -329,20 +299,6 @@ export default function ModernLogin() {
           </Typography>
         </Stack>
       </Card>
-
-      {/* Bottom Shadow */}
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: "calc(50% - 250px)",
-          width: "300px",
-          height: "20px",
-          background: "rgba(60, 60, 60, 0.2)",
-          borderRadius: "50%",
-          filter: "blur(20px)",
-          zIndex: 0,
-        }}
-      />
     </Stack>
   );
 }
