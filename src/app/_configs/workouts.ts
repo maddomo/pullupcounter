@@ -1,9 +1,7 @@
-// configs/workouts.ts
-import type { WorkoutSession } from "../_types/period";
 
 export type WorkoutKey = "pullups" | "pushUps" | "situps";
 
-export type WorkoutConfig<T extends WorkoutSession> = {
+export type WorkoutConfig = {
   key: WorkoutKey;
   label: string;
 };

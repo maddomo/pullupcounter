@@ -25,10 +25,10 @@ import { AddCard, } from "./AddCard";
 import { supabase } from "~/supabase/client";
 import type { WorkoutConfig } from "../_configs/workouts";
 
-export default function WorkoutTracker<T extends WorkoutSession>({
+export default function WorkoutTracker({
     config,
 }: {
-    config: WorkoutConfig<T>,
+    config: WorkoutConfig,
 
 }) {
   const [ period, setPeriod ] = useState<Period>("weekly");

@@ -5,8 +5,6 @@ export default function PushUps(){
     return (
         <WorkoutTracker
             config={workoutConfigs.pushups}
-        >
-
-        </WorkoutTracker>
+        />
     )
 }
