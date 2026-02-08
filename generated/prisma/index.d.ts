@@ -19,6 +19,16 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type PullupSession = $Result.DefaultSelection<Prisma.$PullupSessionPayload>
 /**
+ * Model PushUps
+ * 
+ */
+export type PushUps = $Result.DefaultSelection<Prisma.$PushUpsPayload>
+/**
+ * Model SitUps
+ * 
+ */
+export type SitUps = $Result.DefaultSelection<Prisma.$SitUpsPayload>
+/**
  * Model UserProfile
  * 
  */
@@ -151,6 +161,26 @@ export class PrismaClient<
     * ```
     */
   get pullupSession(): Prisma.PullupSessionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pushUps`: Exposes CRUD operations for the **PushUps** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PushUps
+    * const pushUps = await prisma.pushUps.findMany()
+    * ```
+    */
+  get pushUps(): Prisma.PushUpsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sitUps`: Exposes CRUD operations for the **SitUps** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SitUps
+    * const sitUps = await prisma.sitUps.findMany()
+    * ```
+    */
+  get sitUps(): Prisma.SitUpsDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.userProfile`: Exposes CRUD operations for the **UserProfile** model.
@@ -603,6 +633,8 @@ export namespace Prisma {
 
   export const ModelName: {
     PullupSession: 'PullupSession',
+    PushUps: 'PushUps',
+    SitUps: 'SitUps',
     UserProfile: 'UserProfile'
   };
 
@@ -622,7 +654,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "pullupSession" | "userProfile"
+      modelProps: "pullupSession" | "pushUps" | "sitUps" | "userProfile"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -697,6 +729,154 @@ export namespace Prisma {
           count: {
             args: Prisma.PullupSessionCountArgs<ExtArgs>
             result: $Utils.Optional<PullupSessionCountAggregateOutputType> | number
+          }
+        }
+      }
+      PushUps: {
+        payload: Prisma.$PushUpsPayload<ExtArgs>
+        fields: Prisma.PushUpsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PushUpsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushUpsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PushUpsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushUpsPayload>
+          }
+          findFirst: {
+            args: Prisma.PushUpsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushUpsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PushUpsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushUpsPayload>
+          }
+          findMany: {
+            args: Prisma.PushUpsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushUpsPayload>[]
+          }
+          create: {
+            args: Prisma.PushUpsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushUpsPayload>
+          }
+          createMany: {
+            args: Prisma.PushUpsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PushUpsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushUpsPayload>[]
+          }
+          delete: {
+            args: Prisma.PushUpsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushUpsPayload>
+          }
+          update: {
+            args: Prisma.PushUpsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushUpsPayload>
+          }
+          deleteMany: {
+            args: Prisma.PushUpsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PushUpsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PushUpsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushUpsPayload>[]
+          }
+          upsert: {
+            args: Prisma.PushUpsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushUpsPayload>
+          }
+          aggregate: {
+            args: Prisma.PushUpsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePushUps>
+          }
+          groupBy: {
+            args: Prisma.PushUpsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PushUpsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PushUpsCountArgs<ExtArgs>
+            result: $Utils.Optional<PushUpsCountAggregateOutputType> | number
+          }
+        }
+      }
+      SitUps: {
+        payload: Prisma.$SitUpsPayload<ExtArgs>
+        fields: Prisma.SitUpsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SitUpsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitUpsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SitUpsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitUpsPayload>
+          }
+          findFirst: {
+            args: Prisma.SitUpsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitUpsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SitUpsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitUpsPayload>
+          }
+          findMany: {
+            args: Prisma.SitUpsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitUpsPayload>[]
+          }
+          create: {
+            args: Prisma.SitUpsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitUpsPayload>
+          }
+          createMany: {
+            args: Prisma.SitUpsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SitUpsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitUpsPayload>[]
+          }
+          delete: {
+            args: Prisma.SitUpsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitUpsPayload>
+          }
+          update: {
+            args: Prisma.SitUpsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitUpsPayload>
+          }
+          deleteMany: {
+            args: Prisma.SitUpsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SitUpsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SitUpsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitUpsPayload>[]
+          }
+          upsert: {
+            args: Prisma.SitUpsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitUpsPayload>
+          }
+          aggregate: {
+            args: Prisma.SitUpsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSitUps>
+          }
+          groupBy: {
+            args: Prisma.SitUpsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SitUpsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SitUpsCountArgs<ExtArgs>
+            result: $Utils.Optional<SitUpsCountAggregateOutputType> | number
           }
         }
       }
@@ -871,6 +1051,8 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     pullupSession?: PullupSessionOmit
+    pushUps?: PushUpsOmit
+    sitUps?: SitUpsOmit
     userProfile?: UserProfileOmit
   }
 
@@ -953,10 +1135,14 @@ export namespace Prisma {
 
   export type UserProfileCountOutputType = {
     pullupSessions: number
+    sitUps: number
+    pushUps: number
   }
 
   export type UserProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pullupSessions?: boolean | UserProfileCountOutputTypeCountPullupSessionsArgs
+    sitUps?: boolean | UserProfileCountOutputTypeCountSitUpsArgs
+    pushUps?: boolean | UserProfileCountOutputTypeCountPushUpsArgs
   }
 
   // Custom InputTypes
@@ -975,6 +1161,20 @@ export namespace Prisma {
    */
   export type UserProfileCountOutputTypeCountPullupSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PullupSessionWhereInput
+  }
+
+  /**
+   * UserProfileCountOutputType without action
+   */
+  export type UserProfileCountOutputTypeCountSitUpsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SitUpsWhereInput
+  }
+
+  /**
+   * UserProfileCountOutputType without action
+   */
+  export type UserProfileCountOutputTypeCountPushUpsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PushUpsWhereInput
   }
 
 
@@ -2079,6 +2279,2198 @@ export namespace Prisma {
 
 
   /**
+   * Model PushUps
+   */
+
+  export type AggregatePushUps = {
+    _count: PushUpsCountAggregateOutputType | null
+    _avg: PushUpsAvgAggregateOutputType | null
+    _sum: PushUpsSumAggregateOutputType | null
+    _min: PushUpsMinAggregateOutputType | null
+    _max: PushUpsMaxAggregateOutputType | null
+  }
+
+  export type PushUpsAvgAggregateOutputType = {
+    id: number | null
+    count: number | null
+  }
+
+  export type PushUpsSumAggregateOutputType = {
+    id: number | null
+    count: number | null
+  }
+
+  export type PushUpsMinAggregateOutputType = {
+    id: number | null
+    count: number | null
+    createdAt: Date | null
+    deviceId: string | null
+    userId: string | null
+  }
+
+  export type PushUpsMaxAggregateOutputType = {
+    id: number | null
+    count: number | null
+    createdAt: Date | null
+    deviceId: string | null
+    userId: string | null
+  }
+
+  export type PushUpsCountAggregateOutputType = {
+    id: number
+    count: number
+    createdAt: number
+    deviceId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type PushUpsAvgAggregateInputType = {
+    id?: true
+    count?: true
+  }
+
+  export type PushUpsSumAggregateInputType = {
+    id?: true
+    count?: true
+  }
+
+  export type PushUpsMinAggregateInputType = {
+    id?: true
+    count?: true
+    createdAt?: true
+    deviceId?: true
+    userId?: true
+  }
+
+  export type PushUpsMaxAggregateInputType = {
+    id?: true
+    count?: true
+    createdAt?: true
+    deviceId?: true
+    userId?: true
+  }
+
+  export type PushUpsCountAggregateInputType = {
+    id?: true
+    count?: true
+    createdAt?: true
+    deviceId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type PushUpsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PushUps to aggregate.
+     */
+    where?: PushUpsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushUps to fetch.
+     */
+    orderBy?: PushUpsOrderByWithRelationInput | PushUpsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PushUpsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushUps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushUps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PushUps
+    **/
+    _count?: true | PushUpsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PushUpsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PushUpsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PushUpsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PushUpsMaxAggregateInputType
+  }
+
+  export type GetPushUpsAggregateType<T extends PushUpsAggregateArgs> = {
+        [P in keyof T & keyof AggregatePushUps]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePushUps[P]>
+      : GetScalarType<T[P], AggregatePushUps[P]>
+  }
+
+
+
+
+  export type PushUpsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PushUpsWhereInput
+    orderBy?: PushUpsOrderByWithAggregationInput | PushUpsOrderByWithAggregationInput[]
+    by: PushUpsScalarFieldEnum[] | PushUpsScalarFieldEnum
+    having?: PushUpsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PushUpsCountAggregateInputType | true
+    _avg?: PushUpsAvgAggregateInputType
+    _sum?: PushUpsSumAggregateInputType
+    _min?: PushUpsMinAggregateInputType
+    _max?: PushUpsMaxAggregateInputType
+  }
+
+  export type PushUpsGroupByOutputType = {
+    id: number
+    count: number
+    createdAt: Date
+    deviceId: string | null
+    userId: string
+    _count: PushUpsCountAggregateOutputType | null
+    _avg: PushUpsAvgAggregateOutputType | null
+    _sum: PushUpsSumAggregateOutputType | null
+    _min: PushUpsMinAggregateOutputType | null
+    _max: PushUpsMaxAggregateOutputType | null
+  }
+
+  type GetPushUpsGroupByPayload<T extends PushUpsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PushUpsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PushUpsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PushUpsGroupByOutputType[P]>
+            : GetScalarType<T[P], PushUpsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PushUpsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    count?: boolean
+    createdAt?: boolean
+    deviceId?: boolean
+    userId?: boolean
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pushUps"]>
+
+  export type PushUpsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    count?: boolean
+    createdAt?: boolean
+    deviceId?: boolean
+    userId?: boolean
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pushUps"]>
+
+  export type PushUpsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    count?: boolean
+    createdAt?: boolean
+    deviceId?: boolean
+    userId?: boolean
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pushUps"]>
+
+  export type PushUpsSelectScalar = {
+    id?: boolean
+    count?: boolean
+    createdAt?: boolean
+    deviceId?: boolean
+    userId?: boolean
+  }
+
+  export type PushUpsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "count" | "createdAt" | "deviceId" | "userId", ExtArgs["result"]["pushUps"]>
+  export type PushUpsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }
+  export type PushUpsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }
+  export type PushUpsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }
+
+  export type $PushUpsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PushUps"
+    objects: {
+      user: Prisma.$UserProfilePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      count: number
+      createdAt: Date
+      deviceId: string | null
+      userId: string
+    }, ExtArgs["result"]["pushUps"]>
+    composites: {}
+  }
+
+  type PushUpsGetPayload<S extends boolean | null | undefined | PushUpsDefaultArgs> = $Result.GetResult<Prisma.$PushUpsPayload, S>
+
+  type PushUpsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PushUpsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PushUpsCountAggregateInputType | true
+    }
+
+  export interface PushUpsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PushUps'], meta: { name: 'PushUps' } }
+    /**
+     * Find zero or one PushUps that matches the filter.
+     * @param {PushUpsFindUniqueArgs} args - Arguments to find a PushUps
+     * @example
+     * // Get one PushUps
+     * const pushUps = await prisma.pushUps.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PushUpsFindUniqueArgs>(args: SelectSubset<T, PushUpsFindUniqueArgs<ExtArgs>>): Prisma__PushUpsClient<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PushUps that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PushUpsFindUniqueOrThrowArgs} args - Arguments to find a PushUps
+     * @example
+     * // Get one PushUps
+     * const pushUps = await prisma.pushUps.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PushUpsFindUniqueOrThrowArgs>(args: SelectSubset<T, PushUpsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PushUpsClient<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PushUps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushUpsFindFirstArgs} args - Arguments to find a PushUps
+     * @example
+     * // Get one PushUps
+     * const pushUps = await prisma.pushUps.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PushUpsFindFirstArgs>(args?: SelectSubset<T, PushUpsFindFirstArgs<ExtArgs>>): Prisma__PushUpsClient<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PushUps that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushUpsFindFirstOrThrowArgs} args - Arguments to find a PushUps
+     * @example
+     * // Get one PushUps
+     * const pushUps = await prisma.pushUps.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PushUpsFindFirstOrThrowArgs>(args?: SelectSubset<T, PushUpsFindFirstOrThrowArgs<ExtArgs>>): Prisma__PushUpsClient<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PushUps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushUpsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PushUps
+     * const pushUps = await prisma.pushUps.findMany()
+     * 
+     * // Get first 10 PushUps
+     * const pushUps = await prisma.pushUps.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pushUpsWithIdOnly = await prisma.pushUps.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PushUpsFindManyArgs>(args?: SelectSubset<T, PushUpsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PushUps.
+     * @param {PushUpsCreateArgs} args - Arguments to create a PushUps.
+     * @example
+     * // Create one PushUps
+     * const PushUps = await prisma.pushUps.create({
+     *   data: {
+     *     // ... data to create a PushUps
+     *   }
+     * })
+     * 
+     */
+    create<T extends PushUpsCreateArgs>(args: SelectSubset<T, PushUpsCreateArgs<ExtArgs>>): Prisma__PushUpsClient<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PushUps.
+     * @param {PushUpsCreateManyArgs} args - Arguments to create many PushUps.
+     * @example
+     * // Create many PushUps
+     * const pushUps = await prisma.pushUps.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PushUpsCreateManyArgs>(args?: SelectSubset<T, PushUpsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PushUps and returns the data saved in the database.
+     * @param {PushUpsCreateManyAndReturnArgs} args - Arguments to create many PushUps.
+     * @example
+     * // Create many PushUps
+     * const pushUps = await prisma.pushUps.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PushUps and only return the `id`
+     * const pushUpsWithIdOnly = await prisma.pushUps.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PushUpsCreateManyAndReturnArgs>(args?: SelectSubset<T, PushUpsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PushUps.
+     * @param {PushUpsDeleteArgs} args - Arguments to delete one PushUps.
+     * @example
+     * // Delete one PushUps
+     * const PushUps = await prisma.pushUps.delete({
+     *   where: {
+     *     // ... filter to delete one PushUps
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PushUpsDeleteArgs>(args: SelectSubset<T, PushUpsDeleteArgs<ExtArgs>>): Prisma__PushUpsClient<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PushUps.
+     * @param {PushUpsUpdateArgs} args - Arguments to update one PushUps.
+     * @example
+     * // Update one PushUps
+     * const pushUps = await prisma.pushUps.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PushUpsUpdateArgs>(args: SelectSubset<T, PushUpsUpdateArgs<ExtArgs>>): Prisma__PushUpsClient<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PushUps.
+     * @param {PushUpsDeleteManyArgs} args - Arguments to filter PushUps to delete.
+     * @example
+     * // Delete a few PushUps
+     * const { count } = await prisma.pushUps.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PushUpsDeleteManyArgs>(args?: SelectSubset<T, PushUpsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PushUps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushUpsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PushUps
+     * const pushUps = await prisma.pushUps.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PushUpsUpdateManyArgs>(args: SelectSubset<T, PushUpsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PushUps and returns the data updated in the database.
+     * @param {PushUpsUpdateManyAndReturnArgs} args - Arguments to update many PushUps.
+     * @example
+     * // Update many PushUps
+     * const pushUps = await prisma.pushUps.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PushUps and only return the `id`
+     * const pushUpsWithIdOnly = await prisma.pushUps.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PushUpsUpdateManyAndReturnArgs>(args: SelectSubset<T, PushUpsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PushUps.
+     * @param {PushUpsUpsertArgs} args - Arguments to update or create a PushUps.
+     * @example
+     * // Update or create a PushUps
+     * const pushUps = await prisma.pushUps.upsert({
+     *   create: {
+     *     // ... data to create a PushUps
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PushUps we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PushUpsUpsertArgs>(args: SelectSubset<T, PushUpsUpsertArgs<ExtArgs>>): Prisma__PushUpsClient<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PushUps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushUpsCountArgs} args - Arguments to filter PushUps to count.
+     * @example
+     * // Count the number of PushUps
+     * const count = await prisma.pushUps.count({
+     *   where: {
+     *     // ... the filter for the PushUps we want to count
+     *   }
+     * })
+    **/
+    count<T extends PushUpsCountArgs>(
+      args?: Subset<T, PushUpsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PushUpsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PushUps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushUpsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PushUpsAggregateArgs>(args: Subset<T, PushUpsAggregateArgs>): Prisma.PrismaPromise<GetPushUpsAggregateType<T>>
+
+    /**
+     * Group by PushUps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushUpsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PushUpsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PushUpsGroupByArgs['orderBy'] }
+        : { orderBy?: PushUpsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PushUpsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPushUpsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PushUps model
+   */
+  readonly fields: PushUpsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PushUps.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PushUpsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserProfileDefaultArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PushUps model
+   */
+  interface PushUpsFieldRefs {
+    readonly id: FieldRef<"PushUps", 'Int'>
+    readonly count: FieldRef<"PushUps", 'Int'>
+    readonly createdAt: FieldRef<"PushUps", 'DateTime'>
+    readonly deviceId: FieldRef<"PushUps", 'String'>
+    readonly userId: FieldRef<"PushUps", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PushUps findUnique
+   */
+  export type PushUpsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsInclude<ExtArgs> | null
+    /**
+     * Filter, which PushUps to fetch.
+     */
+    where: PushUpsWhereUniqueInput
+  }
+
+  /**
+   * PushUps findUniqueOrThrow
+   */
+  export type PushUpsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsInclude<ExtArgs> | null
+    /**
+     * Filter, which PushUps to fetch.
+     */
+    where: PushUpsWhereUniqueInput
+  }
+
+  /**
+   * PushUps findFirst
+   */
+  export type PushUpsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsInclude<ExtArgs> | null
+    /**
+     * Filter, which PushUps to fetch.
+     */
+    where?: PushUpsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushUps to fetch.
+     */
+    orderBy?: PushUpsOrderByWithRelationInput | PushUpsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PushUps.
+     */
+    cursor?: PushUpsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushUps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushUps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PushUps.
+     */
+    distinct?: PushUpsScalarFieldEnum | PushUpsScalarFieldEnum[]
+  }
+
+  /**
+   * PushUps findFirstOrThrow
+   */
+  export type PushUpsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsInclude<ExtArgs> | null
+    /**
+     * Filter, which PushUps to fetch.
+     */
+    where?: PushUpsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushUps to fetch.
+     */
+    orderBy?: PushUpsOrderByWithRelationInput | PushUpsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PushUps.
+     */
+    cursor?: PushUpsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushUps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushUps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PushUps.
+     */
+    distinct?: PushUpsScalarFieldEnum | PushUpsScalarFieldEnum[]
+  }
+
+  /**
+   * PushUps findMany
+   */
+  export type PushUpsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsInclude<ExtArgs> | null
+    /**
+     * Filter, which PushUps to fetch.
+     */
+    where?: PushUpsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushUps to fetch.
+     */
+    orderBy?: PushUpsOrderByWithRelationInput | PushUpsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PushUps.
+     */
+    cursor?: PushUpsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushUps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushUps.
+     */
+    skip?: number
+    distinct?: PushUpsScalarFieldEnum | PushUpsScalarFieldEnum[]
+  }
+
+  /**
+   * PushUps create
+   */
+  export type PushUpsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PushUps.
+     */
+    data: XOR<PushUpsCreateInput, PushUpsUncheckedCreateInput>
+  }
+
+  /**
+   * PushUps createMany
+   */
+  export type PushUpsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PushUps.
+     */
+    data: PushUpsCreateManyInput | PushUpsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PushUps createManyAndReturn
+   */
+  export type PushUpsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * The data used to create many PushUps.
+     */
+    data: PushUpsCreateManyInput | PushUpsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PushUps update
+   */
+  export type PushUpsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PushUps.
+     */
+    data: XOR<PushUpsUpdateInput, PushUpsUncheckedUpdateInput>
+    /**
+     * Choose, which PushUps to update.
+     */
+    where: PushUpsWhereUniqueInput
+  }
+
+  /**
+   * PushUps updateMany
+   */
+  export type PushUpsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PushUps.
+     */
+    data: XOR<PushUpsUpdateManyMutationInput, PushUpsUncheckedUpdateManyInput>
+    /**
+     * Filter which PushUps to update
+     */
+    where?: PushUpsWhereInput
+    /**
+     * Limit how many PushUps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PushUps updateManyAndReturn
+   */
+  export type PushUpsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * The data used to update PushUps.
+     */
+    data: XOR<PushUpsUpdateManyMutationInput, PushUpsUncheckedUpdateManyInput>
+    /**
+     * Filter which PushUps to update
+     */
+    where?: PushUpsWhereInput
+    /**
+     * Limit how many PushUps to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PushUps upsert
+   */
+  export type PushUpsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PushUps to update in case it exists.
+     */
+    where: PushUpsWhereUniqueInput
+    /**
+     * In case the PushUps found by the `where` argument doesn't exist, create a new PushUps with this data.
+     */
+    create: XOR<PushUpsCreateInput, PushUpsUncheckedCreateInput>
+    /**
+     * In case the PushUps was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PushUpsUpdateInput, PushUpsUncheckedUpdateInput>
+  }
+
+  /**
+   * PushUps delete
+   */
+  export type PushUpsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsInclude<ExtArgs> | null
+    /**
+     * Filter which PushUps to delete.
+     */
+    where: PushUpsWhereUniqueInput
+  }
+
+  /**
+   * PushUps deleteMany
+   */
+  export type PushUpsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PushUps to delete
+     */
+    where?: PushUpsWhereInput
+    /**
+     * Limit how many PushUps to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PushUps without action
+   */
+  export type PushUpsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SitUps
+   */
+
+  export type AggregateSitUps = {
+    _count: SitUpsCountAggregateOutputType | null
+    _avg: SitUpsAvgAggregateOutputType | null
+    _sum: SitUpsSumAggregateOutputType | null
+    _min: SitUpsMinAggregateOutputType | null
+    _max: SitUpsMaxAggregateOutputType | null
+  }
+
+  export type SitUpsAvgAggregateOutputType = {
+    id: number | null
+    count: number | null
+  }
+
+  export type SitUpsSumAggregateOutputType = {
+    id: number | null
+    count: number | null
+  }
+
+  export type SitUpsMinAggregateOutputType = {
+    id: number | null
+    count: number | null
+    createdAt: Date | null
+    deviceId: string | null
+    userId: string | null
+  }
+
+  export type SitUpsMaxAggregateOutputType = {
+    id: number | null
+    count: number | null
+    createdAt: Date | null
+    deviceId: string | null
+    userId: string | null
+  }
+
+  export type SitUpsCountAggregateOutputType = {
+    id: number
+    count: number
+    createdAt: number
+    deviceId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type SitUpsAvgAggregateInputType = {
+    id?: true
+    count?: true
+  }
+
+  export type SitUpsSumAggregateInputType = {
+    id?: true
+    count?: true
+  }
+
+  export type SitUpsMinAggregateInputType = {
+    id?: true
+    count?: true
+    createdAt?: true
+    deviceId?: true
+    userId?: true
+  }
+
+  export type SitUpsMaxAggregateInputType = {
+    id?: true
+    count?: true
+    createdAt?: true
+    deviceId?: true
+    userId?: true
+  }
+
+  export type SitUpsCountAggregateInputType = {
+    id?: true
+    count?: true
+    createdAt?: true
+    deviceId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type SitUpsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SitUps to aggregate.
+     */
+    where?: SitUpsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SitUps to fetch.
+     */
+    orderBy?: SitUpsOrderByWithRelationInput | SitUpsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SitUpsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SitUps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SitUps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SitUps
+    **/
+    _count?: true | SitUpsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SitUpsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SitUpsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SitUpsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SitUpsMaxAggregateInputType
+  }
+
+  export type GetSitUpsAggregateType<T extends SitUpsAggregateArgs> = {
+        [P in keyof T & keyof AggregateSitUps]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSitUps[P]>
+      : GetScalarType<T[P], AggregateSitUps[P]>
+  }
+
+
+
+
+  export type SitUpsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SitUpsWhereInput
+    orderBy?: SitUpsOrderByWithAggregationInput | SitUpsOrderByWithAggregationInput[]
+    by: SitUpsScalarFieldEnum[] | SitUpsScalarFieldEnum
+    having?: SitUpsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SitUpsCountAggregateInputType | true
+    _avg?: SitUpsAvgAggregateInputType
+    _sum?: SitUpsSumAggregateInputType
+    _min?: SitUpsMinAggregateInputType
+    _max?: SitUpsMaxAggregateInputType
+  }
+
+  export type SitUpsGroupByOutputType = {
+    id: number
+    count: number
+    createdAt: Date
+    deviceId: string | null
+    userId: string
+    _count: SitUpsCountAggregateOutputType | null
+    _avg: SitUpsAvgAggregateOutputType | null
+    _sum: SitUpsSumAggregateOutputType | null
+    _min: SitUpsMinAggregateOutputType | null
+    _max: SitUpsMaxAggregateOutputType | null
+  }
+
+  type GetSitUpsGroupByPayload<T extends SitUpsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SitUpsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SitUpsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SitUpsGroupByOutputType[P]>
+            : GetScalarType<T[P], SitUpsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SitUpsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    count?: boolean
+    createdAt?: boolean
+    deviceId?: boolean
+    userId?: boolean
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sitUps"]>
+
+  export type SitUpsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    count?: boolean
+    createdAt?: boolean
+    deviceId?: boolean
+    userId?: boolean
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sitUps"]>
+
+  export type SitUpsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    count?: boolean
+    createdAt?: boolean
+    deviceId?: boolean
+    userId?: boolean
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sitUps"]>
+
+  export type SitUpsSelectScalar = {
+    id?: boolean
+    count?: boolean
+    createdAt?: boolean
+    deviceId?: boolean
+    userId?: boolean
+  }
+
+  export type SitUpsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "count" | "createdAt" | "deviceId" | "userId", ExtArgs["result"]["sitUps"]>
+  export type SitUpsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }
+  export type SitUpsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }
+  export type SitUpsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserProfileDefaultArgs<ExtArgs>
+  }
+
+  export type $SitUpsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SitUps"
+    objects: {
+      user: Prisma.$UserProfilePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      count: number
+      createdAt: Date
+      deviceId: string | null
+      userId: string
+    }, ExtArgs["result"]["sitUps"]>
+    composites: {}
+  }
+
+  type SitUpsGetPayload<S extends boolean | null | undefined | SitUpsDefaultArgs> = $Result.GetResult<Prisma.$SitUpsPayload, S>
+
+  type SitUpsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SitUpsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SitUpsCountAggregateInputType | true
+    }
+
+  export interface SitUpsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SitUps'], meta: { name: 'SitUps' } }
+    /**
+     * Find zero or one SitUps that matches the filter.
+     * @param {SitUpsFindUniqueArgs} args - Arguments to find a SitUps
+     * @example
+     * // Get one SitUps
+     * const sitUps = await prisma.sitUps.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SitUpsFindUniqueArgs>(args: SelectSubset<T, SitUpsFindUniqueArgs<ExtArgs>>): Prisma__SitUpsClient<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SitUps that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SitUpsFindUniqueOrThrowArgs} args - Arguments to find a SitUps
+     * @example
+     * // Get one SitUps
+     * const sitUps = await prisma.sitUps.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SitUpsFindUniqueOrThrowArgs>(args: SelectSubset<T, SitUpsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SitUpsClient<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SitUps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitUpsFindFirstArgs} args - Arguments to find a SitUps
+     * @example
+     * // Get one SitUps
+     * const sitUps = await prisma.sitUps.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SitUpsFindFirstArgs>(args?: SelectSubset<T, SitUpsFindFirstArgs<ExtArgs>>): Prisma__SitUpsClient<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SitUps that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitUpsFindFirstOrThrowArgs} args - Arguments to find a SitUps
+     * @example
+     * // Get one SitUps
+     * const sitUps = await prisma.sitUps.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SitUpsFindFirstOrThrowArgs>(args?: SelectSubset<T, SitUpsFindFirstOrThrowArgs<ExtArgs>>): Prisma__SitUpsClient<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SitUps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitUpsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SitUps
+     * const sitUps = await prisma.sitUps.findMany()
+     * 
+     * // Get first 10 SitUps
+     * const sitUps = await prisma.sitUps.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sitUpsWithIdOnly = await prisma.sitUps.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SitUpsFindManyArgs>(args?: SelectSubset<T, SitUpsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SitUps.
+     * @param {SitUpsCreateArgs} args - Arguments to create a SitUps.
+     * @example
+     * // Create one SitUps
+     * const SitUps = await prisma.sitUps.create({
+     *   data: {
+     *     // ... data to create a SitUps
+     *   }
+     * })
+     * 
+     */
+    create<T extends SitUpsCreateArgs>(args: SelectSubset<T, SitUpsCreateArgs<ExtArgs>>): Prisma__SitUpsClient<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SitUps.
+     * @param {SitUpsCreateManyArgs} args - Arguments to create many SitUps.
+     * @example
+     * // Create many SitUps
+     * const sitUps = await prisma.sitUps.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SitUpsCreateManyArgs>(args?: SelectSubset<T, SitUpsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SitUps and returns the data saved in the database.
+     * @param {SitUpsCreateManyAndReturnArgs} args - Arguments to create many SitUps.
+     * @example
+     * // Create many SitUps
+     * const sitUps = await prisma.sitUps.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SitUps and only return the `id`
+     * const sitUpsWithIdOnly = await prisma.sitUps.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SitUpsCreateManyAndReturnArgs>(args?: SelectSubset<T, SitUpsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SitUps.
+     * @param {SitUpsDeleteArgs} args - Arguments to delete one SitUps.
+     * @example
+     * // Delete one SitUps
+     * const SitUps = await prisma.sitUps.delete({
+     *   where: {
+     *     // ... filter to delete one SitUps
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SitUpsDeleteArgs>(args: SelectSubset<T, SitUpsDeleteArgs<ExtArgs>>): Prisma__SitUpsClient<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SitUps.
+     * @param {SitUpsUpdateArgs} args - Arguments to update one SitUps.
+     * @example
+     * // Update one SitUps
+     * const sitUps = await prisma.sitUps.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SitUpsUpdateArgs>(args: SelectSubset<T, SitUpsUpdateArgs<ExtArgs>>): Prisma__SitUpsClient<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SitUps.
+     * @param {SitUpsDeleteManyArgs} args - Arguments to filter SitUps to delete.
+     * @example
+     * // Delete a few SitUps
+     * const { count } = await prisma.sitUps.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SitUpsDeleteManyArgs>(args?: SelectSubset<T, SitUpsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SitUps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitUpsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SitUps
+     * const sitUps = await prisma.sitUps.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SitUpsUpdateManyArgs>(args: SelectSubset<T, SitUpsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SitUps and returns the data updated in the database.
+     * @param {SitUpsUpdateManyAndReturnArgs} args - Arguments to update many SitUps.
+     * @example
+     * // Update many SitUps
+     * const sitUps = await prisma.sitUps.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SitUps and only return the `id`
+     * const sitUpsWithIdOnly = await prisma.sitUps.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SitUpsUpdateManyAndReturnArgs>(args: SelectSubset<T, SitUpsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SitUps.
+     * @param {SitUpsUpsertArgs} args - Arguments to update or create a SitUps.
+     * @example
+     * // Update or create a SitUps
+     * const sitUps = await prisma.sitUps.upsert({
+     *   create: {
+     *     // ... data to create a SitUps
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SitUps we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SitUpsUpsertArgs>(args: SelectSubset<T, SitUpsUpsertArgs<ExtArgs>>): Prisma__SitUpsClient<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SitUps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitUpsCountArgs} args - Arguments to filter SitUps to count.
+     * @example
+     * // Count the number of SitUps
+     * const count = await prisma.sitUps.count({
+     *   where: {
+     *     // ... the filter for the SitUps we want to count
+     *   }
+     * })
+    **/
+    count<T extends SitUpsCountArgs>(
+      args?: Subset<T, SitUpsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SitUpsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SitUps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitUpsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SitUpsAggregateArgs>(args: Subset<T, SitUpsAggregateArgs>): Prisma.PrismaPromise<GetSitUpsAggregateType<T>>
+
+    /**
+     * Group by SitUps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitUpsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SitUpsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SitUpsGroupByArgs['orderBy'] }
+        : { orderBy?: SitUpsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SitUpsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSitUpsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SitUps model
+   */
+  readonly fields: SitUpsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SitUps.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SitUpsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserProfileDefaultArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SitUps model
+   */
+  interface SitUpsFieldRefs {
+    readonly id: FieldRef<"SitUps", 'Int'>
+    readonly count: FieldRef<"SitUps", 'Int'>
+    readonly createdAt: FieldRef<"SitUps", 'DateTime'>
+    readonly deviceId: FieldRef<"SitUps", 'String'>
+    readonly userId: FieldRef<"SitUps", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SitUps findUnique
+   */
+  export type SitUpsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsInclude<ExtArgs> | null
+    /**
+     * Filter, which SitUps to fetch.
+     */
+    where: SitUpsWhereUniqueInput
+  }
+
+  /**
+   * SitUps findUniqueOrThrow
+   */
+  export type SitUpsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsInclude<ExtArgs> | null
+    /**
+     * Filter, which SitUps to fetch.
+     */
+    where: SitUpsWhereUniqueInput
+  }
+
+  /**
+   * SitUps findFirst
+   */
+  export type SitUpsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsInclude<ExtArgs> | null
+    /**
+     * Filter, which SitUps to fetch.
+     */
+    where?: SitUpsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SitUps to fetch.
+     */
+    orderBy?: SitUpsOrderByWithRelationInput | SitUpsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SitUps.
+     */
+    cursor?: SitUpsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SitUps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SitUps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SitUps.
+     */
+    distinct?: SitUpsScalarFieldEnum | SitUpsScalarFieldEnum[]
+  }
+
+  /**
+   * SitUps findFirstOrThrow
+   */
+  export type SitUpsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsInclude<ExtArgs> | null
+    /**
+     * Filter, which SitUps to fetch.
+     */
+    where?: SitUpsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SitUps to fetch.
+     */
+    orderBy?: SitUpsOrderByWithRelationInput | SitUpsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SitUps.
+     */
+    cursor?: SitUpsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SitUps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SitUps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SitUps.
+     */
+    distinct?: SitUpsScalarFieldEnum | SitUpsScalarFieldEnum[]
+  }
+
+  /**
+   * SitUps findMany
+   */
+  export type SitUpsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsInclude<ExtArgs> | null
+    /**
+     * Filter, which SitUps to fetch.
+     */
+    where?: SitUpsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SitUps to fetch.
+     */
+    orderBy?: SitUpsOrderByWithRelationInput | SitUpsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SitUps.
+     */
+    cursor?: SitUpsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SitUps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SitUps.
+     */
+    skip?: number
+    distinct?: SitUpsScalarFieldEnum | SitUpsScalarFieldEnum[]
+  }
+
+  /**
+   * SitUps create
+   */
+  export type SitUpsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SitUps.
+     */
+    data: XOR<SitUpsCreateInput, SitUpsUncheckedCreateInput>
+  }
+
+  /**
+   * SitUps createMany
+   */
+  export type SitUpsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SitUps.
+     */
+    data: SitUpsCreateManyInput | SitUpsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SitUps createManyAndReturn
+   */
+  export type SitUpsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * The data used to create many SitUps.
+     */
+    data: SitUpsCreateManyInput | SitUpsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SitUps update
+   */
+  export type SitUpsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SitUps.
+     */
+    data: XOR<SitUpsUpdateInput, SitUpsUncheckedUpdateInput>
+    /**
+     * Choose, which SitUps to update.
+     */
+    where: SitUpsWhereUniqueInput
+  }
+
+  /**
+   * SitUps updateMany
+   */
+  export type SitUpsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SitUps.
+     */
+    data: XOR<SitUpsUpdateManyMutationInput, SitUpsUncheckedUpdateManyInput>
+    /**
+     * Filter which SitUps to update
+     */
+    where?: SitUpsWhereInput
+    /**
+     * Limit how many SitUps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SitUps updateManyAndReturn
+   */
+  export type SitUpsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * The data used to update SitUps.
+     */
+    data: XOR<SitUpsUpdateManyMutationInput, SitUpsUncheckedUpdateManyInput>
+    /**
+     * Filter which SitUps to update
+     */
+    where?: SitUpsWhereInput
+    /**
+     * Limit how many SitUps to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SitUps upsert
+   */
+  export type SitUpsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SitUps to update in case it exists.
+     */
+    where: SitUpsWhereUniqueInput
+    /**
+     * In case the SitUps found by the `where` argument doesn't exist, create a new SitUps with this data.
+     */
+    create: XOR<SitUpsCreateInput, SitUpsUncheckedCreateInput>
+    /**
+     * In case the SitUps was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SitUpsUpdateInput, SitUpsUncheckedUpdateInput>
+  }
+
+  /**
+   * SitUps delete
+   */
+  export type SitUpsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsInclude<ExtArgs> | null
+    /**
+     * Filter which SitUps to delete.
+     */
+    where: SitUpsWhereUniqueInput
+  }
+
+  /**
+   * SitUps deleteMany
+   */
+  export type SitUpsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SitUps to delete
+     */
+    where?: SitUpsWhereInput
+    /**
+     * Limit how many SitUps to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SitUps without action
+   */
+  export type SitUpsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model UserProfile
    */
 
@@ -2235,6 +4627,8 @@ export namespace Prisma {
     displayName?: boolean
     createdAt?: boolean
     pullupSessions?: boolean | UserProfile$pullupSessionsArgs<ExtArgs>
+    sitUps?: boolean | UserProfile$sitUpsArgs<ExtArgs>
+    pushUps?: boolean | UserProfile$pushUpsArgs<ExtArgs>
     _count?: boolean | UserProfileCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userProfile"]>
 
@@ -2262,6 +4656,8 @@ export namespace Prisma {
   export type UserProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "displayName" | "createdAt", ExtArgs["result"]["userProfile"]>
   export type UserProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pullupSessions?: boolean | UserProfile$pullupSessionsArgs<ExtArgs>
+    sitUps?: boolean | UserProfile$sitUpsArgs<ExtArgs>
+    pushUps?: boolean | UserProfile$pushUpsArgs<ExtArgs>
     _count?: boolean | UserProfileCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2271,6 +4667,8 @@ export namespace Prisma {
     name: "UserProfile"
     objects: {
       pullupSessions: Prisma.$PullupSessionPayload<ExtArgs>[]
+      sitUps: Prisma.$SitUpsPayload<ExtArgs>[]
+      pushUps: Prisma.$PushUpsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2672,6 +5070,8 @@ export namespace Prisma {
   export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     pullupSessions<T extends UserProfile$pullupSessionsArgs<ExtArgs> = {}>(args?: Subset<T, UserProfile$pullupSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PullupSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sitUps<T extends UserProfile$sitUpsArgs<ExtArgs> = {}>(args?: Subset<T, UserProfile$sitUpsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SitUpsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pushUps<T extends UserProfile$pushUpsArgs<ExtArgs> = {}>(args?: Subset<T, UserProfile$pushUpsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushUpsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3117,6 +5517,54 @@ export namespace Prisma {
   }
 
   /**
+   * UserProfile.sitUps
+   */
+  export type UserProfile$sitUpsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitUps
+     */
+    select?: SitUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitUps
+     */
+    omit?: SitUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitUpsInclude<ExtArgs> | null
+    where?: SitUpsWhereInput
+    orderBy?: SitUpsOrderByWithRelationInput | SitUpsOrderByWithRelationInput[]
+    cursor?: SitUpsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SitUpsScalarFieldEnum | SitUpsScalarFieldEnum[]
+  }
+
+  /**
+   * UserProfile.pushUps
+   */
+  export type UserProfile$pushUpsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushUps
+     */
+    select?: PushUpsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushUps
+     */
+    omit?: PushUpsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushUpsInclude<ExtArgs> | null
+    where?: PushUpsWhereInput
+    orderBy?: PushUpsOrderByWithRelationInput | PushUpsOrderByWithRelationInput[]
+    cursor?: PushUpsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PushUpsScalarFieldEnum | PushUpsScalarFieldEnum[]
+  }
+
+  /**
    * UserProfile without action
    */
   export type UserProfileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3158,6 +5606,28 @@ export namespace Prisma {
   };
 
   export type PullupSessionScalarFieldEnum = (typeof PullupSessionScalarFieldEnum)[keyof typeof PullupSessionScalarFieldEnum]
+
+
+  export const PushUpsScalarFieldEnum: {
+    id: 'id',
+    count: 'count',
+    createdAt: 'createdAt',
+    deviceId: 'deviceId',
+    userId: 'userId'
+  };
+
+  export type PushUpsScalarFieldEnum = (typeof PushUpsScalarFieldEnum)[keyof typeof PushUpsScalarFieldEnum]
+
+
+  export const SitUpsScalarFieldEnum: {
+    id: 'id',
+    count: 'count',
+    createdAt: 'createdAt',
+    deviceId: 'deviceId',
+    userId: 'userId'
+  };
+
+  export type SitUpsScalarFieldEnum = (typeof SitUpsScalarFieldEnum)[keyof typeof SitUpsScalarFieldEnum]
 
 
   export const UserProfileScalarFieldEnum: {
@@ -3315,6 +5785,120 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"PullupSession"> | string
   }
 
+  export type PushUpsWhereInput = {
+    AND?: PushUpsWhereInput | PushUpsWhereInput[]
+    OR?: PushUpsWhereInput[]
+    NOT?: PushUpsWhereInput | PushUpsWhereInput[]
+    id?: IntFilter<"PushUps"> | number
+    count?: IntFilter<"PushUps"> | number
+    createdAt?: DateTimeFilter<"PushUps"> | Date | string
+    deviceId?: StringNullableFilter<"PushUps"> | string | null
+    userId?: StringFilter<"PushUps"> | string
+    user?: XOR<UserProfileScalarRelationFilter, UserProfileWhereInput>
+  }
+
+  export type PushUpsOrderByWithRelationInput = {
+    id?: SortOrder
+    count?: SortOrder
+    createdAt?: SortOrder
+    deviceId?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    user?: UserProfileOrderByWithRelationInput
+  }
+
+  export type PushUpsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: PushUpsWhereInput | PushUpsWhereInput[]
+    OR?: PushUpsWhereInput[]
+    NOT?: PushUpsWhereInput | PushUpsWhereInput[]
+    count?: IntFilter<"PushUps"> | number
+    createdAt?: DateTimeFilter<"PushUps"> | Date | string
+    deviceId?: StringNullableFilter<"PushUps"> | string | null
+    userId?: StringFilter<"PushUps"> | string
+    user?: XOR<UserProfileScalarRelationFilter, UserProfileWhereInput>
+  }, "id">
+
+  export type PushUpsOrderByWithAggregationInput = {
+    id?: SortOrder
+    count?: SortOrder
+    createdAt?: SortOrder
+    deviceId?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    _count?: PushUpsCountOrderByAggregateInput
+    _avg?: PushUpsAvgOrderByAggregateInput
+    _max?: PushUpsMaxOrderByAggregateInput
+    _min?: PushUpsMinOrderByAggregateInput
+    _sum?: PushUpsSumOrderByAggregateInput
+  }
+
+  export type PushUpsScalarWhereWithAggregatesInput = {
+    AND?: PushUpsScalarWhereWithAggregatesInput | PushUpsScalarWhereWithAggregatesInput[]
+    OR?: PushUpsScalarWhereWithAggregatesInput[]
+    NOT?: PushUpsScalarWhereWithAggregatesInput | PushUpsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"PushUps"> | number
+    count?: IntWithAggregatesFilter<"PushUps"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"PushUps"> | Date | string
+    deviceId?: StringNullableWithAggregatesFilter<"PushUps"> | string | null
+    userId?: StringWithAggregatesFilter<"PushUps"> | string
+  }
+
+  export type SitUpsWhereInput = {
+    AND?: SitUpsWhereInput | SitUpsWhereInput[]
+    OR?: SitUpsWhereInput[]
+    NOT?: SitUpsWhereInput | SitUpsWhereInput[]
+    id?: IntFilter<"SitUps"> | number
+    count?: IntFilter<"SitUps"> | number
+    createdAt?: DateTimeFilter<"SitUps"> | Date | string
+    deviceId?: StringNullableFilter<"SitUps"> | string | null
+    userId?: StringFilter<"SitUps"> | string
+    user?: XOR<UserProfileScalarRelationFilter, UserProfileWhereInput>
+  }
+
+  export type SitUpsOrderByWithRelationInput = {
+    id?: SortOrder
+    count?: SortOrder
+    createdAt?: SortOrder
+    deviceId?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    user?: UserProfileOrderByWithRelationInput
+  }
+
+  export type SitUpsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: SitUpsWhereInput | SitUpsWhereInput[]
+    OR?: SitUpsWhereInput[]
+    NOT?: SitUpsWhereInput | SitUpsWhereInput[]
+    count?: IntFilter<"SitUps"> | number
+    createdAt?: DateTimeFilter<"SitUps"> | Date | string
+    deviceId?: StringNullableFilter<"SitUps"> | string | null
+    userId?: StringFilter<"SitUps"> | string
+    user?: XOR<UserProfileScalarRelationFilter, UserProfileWhereInput>
+  }, "id">
+
+  export type SitUpsOrderByWithAggregationInput = {
+    id?: SortOrder
+    count?: SortOrder
+    createdAt?: SortOrder
+    deviceId?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    _count?: SitUpsCountOrderByAggregateInput
+    _avg?: SitUpsAvgOrderByAggregateInput
+    _max?: SitUpsMaxOrderByAggregateInput
+    _min?: SitUpsMinOrderByAggregateInput
+    _sum?: SitUpsSumOrderByAggregateInput
+  }
+
+  export type SitUpsScalarWhereWithAggregatesInput = {
+    AND?: SitUpsScalarWhereWithAggregatesInput | SitUpsScalarWhereWithAggregatesInput[]
+    OR?: SitUpsScalarWhereWithAggregatesInput[]
+    NOT?: SitUpsScalarWhereWithAggregatesInput | SitUpsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SitUps"> | number
+    count?: IntWithAggregatesFilter<"SitUps"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"SitUps"> | Date | string
+    deviceId?: StringNullableWithAggregatesFilter<"SitUps"> | string | null
+    userId?: StringWithAggregatesFilter<"SitUps"> | string
+  }
+
   export type UserProfileWhereInput = {
     AND?: UserProfileWhereInput | UserProfileWhereInput[]
     OR?: UserProfileWhereInput[]
@@ -3324,6 +5908,8 @@ export namespace Prisma {
     displayName?: StringNullableFilter<"UserProfile"> | string | null
     createdAt?: DateTimeFilter<"UserProfile"> | Date | string
     pullupSessions?: PullupSessionListRelationFilter
+    sitUps?: SitUpsListRelationFilter
+    pushUps?: PushUpsListRelationFilter
   }
 
   export type UserProfileOrderByWithRelationInput = {
@@ -3332,6 +5918,8 @@ export namespace Prisma {
     displayName?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     pullupSessions?: PullupSessionOrderByRelationAggregateInput
+    sitUps?: SitUpsOrderByRelationAggregateInput
+    pushUps?: PushUpsOrderByRelationAggregateInput
   }
 
   export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -3343,6 +5931,8 @@ export namespace Prisma {
     displayName?: StringNullableFilter<"UserProfile"> | string | null
     createdAt?: DateTimeFilter<"UserProfile"> | Date | string
     pullupSessions?: PullupSessionListRelationFilter
+    sitUps?: SitUpsListRelationFilter
+    pushUps?: PushUpsListRelationFilter
   }, "id" | "email">
 
   export type UserProfileOrderByWithAggregationInput = {
@@ -3417,12 +6007,118 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type PushUpsCreateInput = {
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+    user: UserProfileCreateNestedOneWithoutPushUpsInput
+  }
+
+  export type PushUpsUncheckedCreateInput = {
+    id?: number
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+    userId: string
+  }
+
+  export type PushUpsUpdateInput = {
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserProfileUpdateOneRequiredWithoutPushUpsNestedInput
+  }
+
+  export type PushUpsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PushUpsCreateManyInput = {
+    id?: number
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+    userId: string
+  }
+
+  export type PushUpsUpdateManyMutationInput = {
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PushUpsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SitUpsCreateInput = {
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+    user: UserProfileCreateNestedOneWithoutSitUpsInput
+  }
+
+  export type SitUpsUncheckedCreateInput = {
+    id?: number
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+    userId: string
+  }
+
+  export type SitUpsUpdateInput = {
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserProfileUpdateOneRequiredWithoutSitUpsNestedInput
+  }
+
+  export type SitUpsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SitUpsCreateManyInput = {
+    id?: number
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+    userId: string
+  }
+
+  export type SitUpsUpdateManyMutationInput = {
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SitUpsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type UserProfileCreateInput = {
     id: string
     email?: string | null
     displayName?: string | null
     createdAt?: Date | string
     pullupSessions?: PullupSessionCreateNestedManyWithoutUserInput
+    sitUps?: SitUpsCreateNestedManyWithoutUserInput
+    pushUps?: PushUpsCreateNestedManyWithoutUserInput
   }
 
   export type UserProfileUncheckedCreateInput = {
@@ -3431,6 +6127,8 @@ export namespace Prisma {
     displayName?: string | null
     createdAt?: Date | string
     pullupSessions?: PullupSessionUncheckedCreateNestedManyWithoutUserInput
+    sitUps?: SitUpsUncheckedCreateNestedManyWithoutUserInput
+    pushUps?: PushUpsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserProfileUpdateInput = {
@@ -3439,6 +6137,8 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pullupSessions?: PullupSessionUpdateManyWithoutUserNestedInput
+    sitUps?: SitUpsUpdateManyWithoutUserNestedInput
+    pushUps?: PushUpsUpdateManyWithoutUserNestedInput
   }
 
   export type UserProfileUncheckedUpdateInput = {
@@ -3447,6 +6147,8 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pullupSessions?: PullupSessionUncheckedUpdateManyWithoutUserNestedInput
+    sitUps?: SitUpsUncheckedUpdateManyWithoutUserNestedInput
+    pushUps?: PushUpsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserProfileCreateManyInput = {
@@ -3632,13 +6334,101 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type PushUpsCountOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+    createdAt?: SortOrder
+    deviceId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type PushUpsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+  }
+
+  export type PushUpsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+    createdAt?: SortOrder
+    deviceId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type PushUpsMinOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+    createdAt?: SortOrder
+    deviceId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type PushUpsSumOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+  }
+
+  export type SitUpsCountOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+    createdAt?: SortOrder
+    deviceId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type SitUpsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+  }
+
+  export type SitUpsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+    createdAt?: SortOrder
+    deviceId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type SitUpsMinOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+    createdAt?: SortOrder
+    deviceId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type SitUpsSumOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+  }
+
   export type PullupSessionListRelationFilter = {
     every?: PullupSessionWhereInput
     some?: PullupSessionWhereInput
     none?: PullupSessionWhereInput
   }
 
+  export type SitUpsListRelationFilter = {
+    every?: SitUpsWhereInput
+    some?: SitUpsWhereInput
+    none?: SitUpsWhereInput
+  }
+
+  export type PushUpsListRelationFilter = {
+    every?: PushUpsWhereInput
+    some?: PushUpsWhereInput
+    none?: PushUpsWhereInput
+  }
+
   export type PullupSessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SitUpsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PushUpsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -3697,6 +6487,34 @@ export namespace Prisma {
     set?: string
   }
 
+  export type UserProfileCreateNestedOneWithoutPushUpsInput = {
+    create?: XOR<UserProfileCreateWithoutPushUpsInput, UserProfileUncheckedCreateWithoutPushUpsInput>
+    connectOrCreate?: UserProfileCreateOrConnectWithoutPushUpsInput
+    connect?: UserProfileWhereUniqueInput
+  }
+
+  export type UserProfileUpdateOneRequiredWithoutPushUpsNestedInput = {
+    create?: XOR<UserProfileCreateWithoutPushUpsInput, UserProfileUncheckedCreateWithoutPushUpsInput>
+    connectOrCreate?: UserProfileCreateOrConnectWithoutPushUpsInput
+    upsert?: UserProfileUpsertWithoutPushUpsInput
+    connect?: UserProfileWhereUniqueInput
+    update?: XOR<XOR<UserProfileUpdateToOneWithWhereWithoutPushUpsInput, UserProfileUpdateWithoutPushUpsInput>, UserProfileUncheckedUpdateWithoutPushUpsInput>
+  }
+
+  export type UserProfileCreateNestedOneWithoutSitUpsInput = {
+    create?: XOR<UserProfileCreateWithoutSitUpsInput, UserProfileUncheckedCreateWithoutSitUpsInput>
+    connectOrCreate?: UserProfileCreateOrConnectWithoutSitUpsInput
+    connect?: UserProfileWhereUniqueInput
+  }
+
+  export type UserProfileUpdateOneRequiredWithoutSitUpsNestedInput = {
+    create?: XOR<UserProfileCreateWithoutSitUpsInput, UserProfileUncheckedCreateWithoutSitUpsInput>
+    connectOrCreate?: UserProfileCreateOrConnectWithoutSitUpsInput
+    upsert?: UserProfileUpsertWithoutSitUpsInput
+    connect?: UserProfileWhereUniqueInput
+    update?: XOR<XOR<UserProfileUpdateToOneWithWhereWithoutSitUpsInput, UserProfileUpdateWithoutSitUpsInput>, UserProfileUncheckedUpdateWithoutSitUpsInput>
+  }
+
   export type PullupSessionCreateNestedManyWithoutUserInput = {
     create?: XOR<PullupSessionCreateWithoutUserInput, PullupSessionUncheckedCreateWithoutUserInput> | PullupSessionCreateWithoutUserInput[] | PullupSessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PullupSessionCreateOrConnectWithoutUserInput | PullupSessionCreateOrConnectWithoutUserInput[]
@@ -3704,11 +6522,39 @@ export namespace Prisma {
     connect?: PullupSessionWhereUniqueInput | PullupSessionWhereUniqueInput[]
   }
 
+  export type SitUpsCreateNestedManyWithoutUserInput = {
+    create?: XOR<SitUpsCreateWithoutUserInput, SitUpsUncheckedCreateWithoutUserInput> | SitUpsCreateWithoutUserInput[] | SitUpsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SitUpsCreateOrConnectWithoutUserInput | SitUpsCreateOrConnectWithoutUserInput[]
+    createMany?: SitUpsCreateManyUserInputEnvelope
+    connect?: SitUpsWhereUniqueInput | SitUpsWhereUniqueInput[]
+  }
+
+  export type PushUpsCreateNestedManyWithoutUserInput = {
+    create?: XOR<PushUpsCreateWithoutUserInput, PushUpsUncheckedCreateWithoutUserInput> | PushUpsCreateWithoutUserInput[] | PushUpsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PushUpsCreateOrConnectWithoutUserInput | PushUpsCreateOrConnectWithoutUserInput[]
+    createMany?: PushUpsCreateManyUserInputEnvelope
+    connect?: PushUpsWhereUniqueInput | PushUpsWhereUniqueInput[]
+  }
+
   export type PullupSessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<PullupSessionCreateWithoutUserInput, PullupSessionUncheckedCreateWithoutUserInput> | PullupSessionCreateWithoutUserInput[] | PullupSessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PullupSessionCreateOrConnectWithoutUserInput | PullupSessionCreateOrConnectWithoutUserInput[]
     createMany?: PullupSessionCreateManyUserInputEnvelope
     connect?: PullupSessionWhereUniqueInput | PullupSessionWhereUniqueInput[]
+  }
+
+  export type SitUpsUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SitUpsCreateWithoutUserInput, SitUpsUncheckedCreateWithoutUserInput> | SitUpsCreateWithoutUserInput[] | SitUpsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SitUpsCreateOrConnectWithoutUserInput | SitUpsCreateOrConnectWithoutUserInput[]
+    createMany?: SitUpsCreateManyUserInputEnvelope
+    connect?: SitUpsWhereUniqueInput | SitUpsWhereUniqueInput[]
+  }
+
+  export type PushUpsUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PushUpsCreateWithoutUserInput, PushUpsUncheckedCreateWithoutUserInput> | PushUpsCreateWithoutUserInput[] | PushUpsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PushUpsCreateOrConnectWithoutUserInput | PushUpsCreateOrConnectWithoutUserInput[]
+    createMany?: PushUpsCreateManyUserInputEnvelope
+    connect?: PushUpsWhereUniqueInput | PushUpsWhereUniqueInput[]
   }
 
   export type PullupSessionUpdateManyWithoutUserNestedInput = {
@@ -3725,6 +6571,34 @@ export namespace Prisma {
     deleteMany?: PullupSessionScalarWhereInput | PullupSessionScalarWhereInput[]
   }
 
+  export type SitUpsUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SitUpsCreateWithoutUserInput, SitUpsUncheckedCreateWithoutUserInput> | SitUpsCreateWithoutUserInput[] | SitUpsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SitUpsCreateOrConnectWithoutUserInput | SitUpsCreateOrConnectWithoutUserInput[]
+    upsert?: SitUpsUpsertWithWhereUniqueWithoutUserInput | SitUpsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SitUpsCreateManyUserInputEnvelope
+    set?: SitUpsWhereUniqueInput | SitUpsWhereUniqueInput[]
+    disconnect?: SitUpsWhereUniqueInput | SitUpsWhereUniqueInput[]
+    delete?: SitUpsWhereUniqueInput | SitUpsWhereUniqueInput[]
+    connect?: SitUpsWhereUniqueInput | SitUpsWhereUniqueInput[]
+    update?: SitUpsUpdateWithWhereUniqueWithoutUserInput | SitUpsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SitUpsUpdateManyWithWhereWithoutUserInput | SitUpsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SitUpsScalarWhereInput | SitUpsScalarWhereInput[]
+  }
+
+  export type PushUpsUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PushUpsCreateWithoutUserInput, PushUpsUncheckedCreateWithoutUserInput> | PushUpsCreateWithoutUserInput[] | PushUpsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PushUpsCreateOrConnectWithoutUserInput | PushUpsCreateOrConnectWithoutUserInput[]
+    upsert?: PushUpsUpsertWithWhereUniqueWithoutUserInput | PushUpsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PushUpsCreateManyUserInputEnvelope
+    set?: PushUpsWhereUniqueInput | PushUpsWhereUniqueInput[]
+    disconnect?: PushUpsWhereUniqueInput | PushUpsWhereUniqueInput[]
+    delete?: PushUpsWhereUniqueInput | PushUpsWhereUniqueInput[]
+    connect?: PushUpsWhereUniqueInput | PushUpsWhereUniqueInput[]
+    update?: PushUpsUpdateWithWhereUniqueWithoutUserInput | PushUpsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PushUpsUpdateManyWithWhereWithoutUserInput | PushUpsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PushUpsScalarWhereInput | PushUpsScalarWhereInput[]
+  }
+
   export type PullupSessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<PullupSessionCreateWithoutUserInput, PullupSessionUncheckedCreateWithoutUserInput> | PullupSessionCreateWithoutUserInput[] | PullupSessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PullupSessionCreateOrConnectWithoutUserInput | PullupSessionCreateOrConnectWithoutUserInput[]
@@ -3737,6 +6611,34 @@ export namespace Prisma {
     update?: PullupSessionUpdateWithWhereUniqueWithoutUserInput | PullupSessionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: PullupSessionUpdateManyWithWhereWithoutUserInput | PullupSessionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: PullupSessionScalarWhereInput | PullupSessionScalarWhereInput[]
+  }
+
+  export type SitUpsUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SitUpsCreateWithoutUserInput, SitUpsUncheckedCreateWithoutUserInput> | SitUpsCreateWithoutUserInput[] | SitUpsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SitUpsCreateOrConnectWithoutUserInput | SitUpsCreateOrConnectWithoutUserInput[]
+    upsert?: SitUpsUpsertWithWhereUniqueWithoutUserInput | SitUpsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SitUpsCreateManyUserInputEnvelope
+    set?: SitUpsWhereUniqueInput | SitUpsWhereUniqueInput[]
+    disconnect?: SitUpsWhereUniqueInput | SitUpsWhereUniqueInput[]
+    delete?: SitUpsWhereUniqueInput | SitUpsWhereUniqueInput[]
+    connect?: SitUpsWhereUniqueInput | SitUpsWhereUniqueInput[]
+    update?: SitUpsUpdateWithWhereUniqueWithoutUserInput | SitUpsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SitUpsUpdateManyWithWhereWithoutUserInput | SitUpsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SitUpsScalarWhereInput | SitUpsScalarWhereInput[]
+  }
+
+  export type PushUpsUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PushUpsCreateWithoutUserInput, PushUpsUncheckedCreateWithoutUserInput> | PushUpsCreateWithoutUserInput[] | PushUpsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PushUpsCreateOrConnectWithoutUserInput | PushUpsCreateOrConnectWithoutUserInput[]
+    upsert?: PushUpsUpsertWithWhereUniqueWithoutUserInput | PushUpsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PushUpsCreateManyUserInputEnvelope
+    set?: PushUpsWhereUniqueInput | PushUpsWhereUniqueInput[]
+    disconnect?: PushUpsWhereUniqueInput | PushUpsWhereUniqueInput[]
+    delete?: PushUpsWhereUniqueInput | PushUpsWhereUniqueInput[]
+    connect?: PushUpsWhereUniqueInput | PushUpsWhereUniqueInput[]
+    update?: PushUpsUpdateWithWhereUniqueWithoutUserInput | PushUpsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PushUpsUpdateManyWithWhereWithoutUserInput | PushUpsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PushUpsScalarWhereInput | PushUpsScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -3880,6 +6782,8 @@ export namespace Prisma {
     email?: string | null
     displayName?: string | null
     createdAt?: Date | string
+    sitUps?: SitUpsCreateNestedManyWithoutUserInput
+    pushUps?: PushUpsCreateNestedManyWithoutUserInput
   }
 
   export type UserProfileUncheckedCreateWithoutPullupSessionsInput = {
@@ -3887,6 +6791,8 @@ export namespace Prisma {
     email?: string | null
     displayName?: string | null
     createdAt?: Date | string
+    sitUps?: SitUpsUncheckedCreateNestedManyWithoutUserInput
+    pushUps?: PushUpsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserProfileCreateOrConnectWithoutPullupSessionsInput = {
@@ -3910,6 +6816,8 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sitUps?: SitUpsUpdateManyWithoutUserNestedInput
+    pushUps?: PushUpsUpdateManyWithoutUserNestedInput
   }
 
   export type UserProfileUncheckedUpdateWithoutPullupSessionsInput = {
@@ -3917,6 +6825,112 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sitUps?: SitUpsUncheckedUpdateManyWithoutUserNestedInput
+    pushUps?: PushUpsUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserProfileCreateWithoutPushUpsInput = {
+    id: string
+    email?: string | null
+    displayName?: string | null
+    createdAt?: Date | string
+    pullupSessions?: PullupSessionCreateNestedManyWithoutUserInput
+    sitUps?: SitUpsCreateNestedManyWithoutUserInput
+  }
+
+  export type UserProfileUncheckedCreateWithoutPushUpsInput = {
+    id: string
+    email?: string | null
+    displayName?: string | null
+    createdAt?: Date | string
+    pullupSessions?: PullupSessionUncheckedCreateNestedManyWithoutUserInput
+    sitUps?: SitUpsUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserProfileCreateOrConnectWithoutPushUpsInput = {
+    where: UserProfileWhereUniqueInput
+    create: XOR<UserProfileCreateWithoutPushUpsInput, UserProfileUncheckedCreateWithoutPushUpsInput>
+  }
+
+  export type UserProfileUpsertWithoutPushUpsInput = {
+    update: XOR<UserProfileUpdateWithoutPushUpsInput, UserProfileUncheckedUpdateWithoutPushUpsInput>
+    create: XOR<UserProfileCreateWithoutPushUpsInput, UserProfileUncheckedCreateWithoutPushUpsInput>
+    where?: UserProfileWhereInput
+  }
+
+  export type UserProfileUpdateToOneWithWhereWithoutPushUpsInput = {
+    where?: UserProfileWhereInput
+    data: XOR<UserProfileUpdateWithoutPushUpsInput, UserProfileUncheckedUpdateWithoutPushUpsInput>
+  }
+
+  export type UserProfileUpdateWithoutPushUpsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pullupSessions?: PullupSessionUpdateManyWithoutUserNestedInput
+    sitUps?: SitUpsUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserProfileUncheckedUpdateWithoutPushUpsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pullupSessions?: PullupSessionUncheckedUpdateManyWithoutUserNestedInput
+    sitUps?: SitUpsUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserProfileCreateWithoutSitUpsInput = {
+    id: string
+    email?: string | null
+    displayName?: string | null
+    createdAt?: Date | string
+    pullupSessions?: PullupSessionCreateNestedManyWithoutUserInput
+    pushUps?: PushUpsCreateNestedManyWithoutUserInput
+  }
+
+  export type UserProfileUncheckedCreateWithoutSitUpsInput = {
+    id: string
+    email?: string | null
+    displayName?: string | null
+    createdAt?: Date | string
+    pullupSessions?: PullupSessionUncheckedCreateNestedManyWithoutUserInput
+    pushUps?: PushUpsUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserProfileCreateOrConnectWithoutSitUpsInput = {
+    where: UserProfileWhereUniqueInput
+    create: XOR<UserProfileCreateWithoutSitUpsInput, UserProfileUncheckedCreateWithoutSitUpsInput>
+  }
+
+  export type UserProfileUpsertWithoutSitUpsInput = {
+    update: XOR<UserProfileUpdateWithoutSitUpsInput, UserProfileUncheckedUpdateWithoutSitUpsInput>
+    create: XOR<UserProfileCreateWithoutSitUpsInput, UserProfileUncheckedCreateWithoutSitUpsInput>
+    where?: UserProfileWhereInput
+  }
+
+  export type UserProfileUpdateToOneWithWhereWithoutSitUpsInput = {
+    where?: UserProfileWhereInput
+    data: XOR<UserProfileUpdateWithoutSitUpsInput, UserProfileUncheckedUpdateWithoutSitUpsInput>
+  }
+
+  export type UserProfileUpdateWithoutSitUpsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pullupSessions?: PullupSessionUpdateManyWithoutUserNestedInput
+    pushUps?: PushUpsUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserProfileUncheckedUpdateWithoutSitUpsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pullupSessions?: PullupSessionUncheckedUpdateManyWithoutUserNestedInput
+    pushUps?: PushUpsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PullupSessionCreateWithoutUserInput = {
@@ -3939,6 +6953,52 @@ export namespace Prisma {
 
   export type PullupSessionCreateManyUserInputEnvelope = {
     data: PullupSessionCreateManyUserInput | PullupSessionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SitUpsCreateWithoutUserInput = {
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+  }
+
+  export type SitUpsUncheckedCreateWithoutUserInput = {
+    id?: number
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+  }
+
+  export type SitUpsCreateOrConnectWithoutUserInput = {
+    where: SitUpsWhereUniqueInput
+    create: XOR<SitUpsCreateWithoutUserInput, SitUpsUncheckedCreateWithoutUserInput>
+  }
+
+  export type SitUpsCreateManyUserInputEnvelope = {
+    data: SitUpsCreateManyUserInput | SitUpsCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PushUpsCreateWithoutUserInput = {
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+  }
+
+  export type PushUpsUncheckedCreateWithoutUserInput = {
+    id?: number
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+  }
+
+  export type PushUpsCreateOrConnectWithoutUserInput = {
+    where: PushUpsWhereUniqueInput
+    create: XOR<PushUpsCreateWithoutUserInput, PushUpsUncheckedCreateWithoutUserInput>
+  }
+
+  export type PushUpsCreateManyUserInputEnvelope = {
+    data: PushUpsCreateManyUserInput | PushUpsCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -3969,7 +7029,75 @@ export namespace Prisma {
     userId?: StringFilter<"PullupSession"> | string
   }
 
+  export type SitUpsUpsertWithWhereUniqueWithoutUserInput = {
+    where: SitUpsWhereUniqueInput
+    update: XOR<SitUpsUpdateWithoutUserInput, SitUpsUncheckedUpdateWithoutUserInput>
+    create: XOR<SitUpsCreateWithoutUserInput, SitUpsUncheckedCreateWithoutUserInput>
+  }
+
+  export type SitUpsUpdateWithWhereUniqueWithoutUserInput = {
+    where: SitUpsWhereUniqueInput
+    data: XOR<SitUpsUpdateWithoutUserInput, SitUpsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SitUpsUpdateManyWithWhereWithoutUserInput = {
+    where: SitUpsScalarWhereInput
+    data: XOR<SitUpsUpdateManyMutationInput, SitUpsUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SitUpsScalarWhereInput = {
+    AND?: SitUpsScalarWhereInput | SitUpsScalarWhereInput[]
+    OR?: SitUpsScalarWhereInput[]
+    NOT?: SitUpsScalarWhereInput | SitUpsScalarWhereInput[]
+    id?: IntFilter<"SitUps"> | number
+    count?: IntFilter<"SitUps"> | number
+    createdAt?: DateTimeFilter<"SitUps"> | Date | string
+    deviceId?: StringNullableFilter<"SitUps"> | string | null
+    userId?: StringFilter<"SitUps"> | string
+  }
+
+  export type PushUpsUpsertWithWhereUniqueWithoutUserInput = {
+    where: PushUpsWhereUniqueInput
+    update: XOR<PushUpsUpdateWithoutUserInput, PushUpsUncheckedUpdateWithoutUserInput>
+    create: XOR<PushUpsCreateWithoutUserInput, PushUpsUncheckedCreateWithoutUserInput>
+  }
+
+  export type PushUpsUpdateWithWhereUniqueWithoutUserInput = {
+    where: PushUpsWhereUniqueInput
+    data: XOR<PushUpsUpdateWithoutUserInput, PushUpsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PushUpsUpdateManyWithWhereWithoutUserInput = {
+    where: PushUpsScalarWhereInput
+    data: XOR<PushUpsUpdateManyMutationInput, PushUpsUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PushUpsScalarWhereInput = {
+    AND?: PushUpsScalarWhereInput | PushUpsScalarWhereInput[]
+    OR?: PushUpsScalarWhereInput[]
+    NOT?: PushUpsScalarWhereInput | PushUpsScalarWhereInput[]
+    id?: IntFilter<"PushUps"> | number
+    count?: IntFilter<"PushUps"> | number
+    createdAt?: DateTimeFilter<"PushUps"> | Date | string
+    deviceId?: StringNullableFilter<"PushUps"> | string | null
+    userId?: StringFilter<"PushUps"> | string
+  }
+
   export type PullupSessionCreateManyUserInput = {
+    id?: number
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+  }
+
+  export type SitUpsCreateManyUserInput = {
+    id?: number
+    count: number
+    createdAt?: Date | string
+    deviceId?: string | null
+  }
+
+  export type PushUpsCreateManyUserInput = {
     id?: number
     count: number
     createdAt?: Date | string
@@ -3990,6 +7118,46 @@ export namespace Prisma {
   }
 
   export type PullupSessionUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SitUpsUpdateWithoutUserInput = {
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SitUpsUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SitUpsUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PushUpsUpdateWithoutUserInput = {
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PushUpsUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    count?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PushUpsUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     count?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

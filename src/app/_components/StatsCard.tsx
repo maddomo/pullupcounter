@@ -1,15 +1,17 @@
 "use client";
 
-import { Card, Typography, Box } from "@mui/material";
+import { Card, Typography, Box, CircularProgress } from "@mui/material";
 
 export function StatsCard({
   label,
   value,
   gradient,
+  loading
 }: {
   label: string;
   value: number;
   gradient: "green" | "blue" | "orange";
+  loading: boolean;
 }) {
   const gradients = {
     green: "linear-gradient(90deg, #4CAF50 0%, #81C784 100%)",
@@ -35,10 +37,14 @@ export function StatsCard({
         {label}
       </Typography>
 
-      <Box sx={{ display: "flex", alignItems: "baseline", gap: 1 }}>
-        <Typography variant="h3" sx={{ fontWeight: 600, color: "white" }}>
-          {value}
-        </Typography>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        {loading ? (
+          <CircularProgress size={30} sx={{ color: "#4CAF50" }} />
+        ) : (
+          <Typography variant="h3" sx={{ fontWeight: 600, color: "white" }}>
+            {value}
+          </Typography>
+        )}
 
         <Box
           sx={{

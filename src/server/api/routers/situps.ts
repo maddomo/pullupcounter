@@ -1,12 +1,12 @@
 import { router, protectedProcedure } from "../trpc";
 import { z } from "zod";
 
-export const pullupsRouter = router({
+export const sitUpsRouter = router({
 
   getAll: protectedProcedure.query(async ( { ctx } ) => {
     const { supabase, user } = ctx; 
     const { data, error } = await supabase
-      .from("PullupSession")
+      .from("SitUps")
       .select("count, createdAt")
       .eq("userId", user.id)
       .order("createdAt", {ascending: true});
@@ -23,7 +23,7 @@ export const pullupsRouter = router({
     if(!userId){
       return
     }
-    return ctx.db.pullupSession.create({
+    return ctx.db.sitUps.create({
       data: {
         count: input.count,
         deviceId: "mobile",
@@ -40,7 +40,7 @@ export const pullupsRouter = router({
 
     const endOfDay = new Date();
     endOfDay.setHours(23, 59, 59, 999);;
-    const { data, error } = await supabase.from("PullupSession").select("count").eq("userId", user.id).gte("createdAt", startOfDay.toISOString()).lte("createdAt", endOfDay.toISOString());
+    const { data, error } = await supabase.from("SitUps").select("count").eq("userId", user.id).gte("createdAt", startOfDay.toISOString()).lte("createdAt", endOfDay.toISOString());
     if(error) throw new Error(error.message);
 
     const total: number = data?.reduce((sum, item) => sum + item.count, 0) ?? 0;

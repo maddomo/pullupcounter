@@ -101,6 +101,22 @@ exports.Prisma.PullupSessionScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.PushUpsScalarFieldEnum = {
+  id: 'id',
+  count: 'count',
+  createdAt: 'createdAt',
+  deviceId: 'deviceId',
+  userId: 'userId'
+};
+
+exports.Prisma.SitUpsScalarFieldEnum = {
+  id: 'id',
+  count: 'count',
+  createdAt: 'createdAt',
+  deviceId: 'deviceId',
+  userId: 'userId'
+};
+
 exports.Prisma.UserProfileScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -126,6 +142,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   PullupSession: 'PullupSession',
+  PushUps: 'PushUps',
+  SitUps: 'SitUps',
   UserProfile: 'UserProfile'
 };
 /**
@@ -167,7 +185,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -176,13 +193,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"DATABASE_URL\")\n  directUrl = env(\"DIRECT_URL\")\n  schemas   = [\"public\"]\n}\n\nmodel PullupSession {\n  id        Int         @id @default(autoincrement())\n  count     Int\n  createdAt DateTime    @default(now())\n  deviceId  String?\n  userId    String // referenziert Supabase auth.users.id (UUID)\n  user      UserProfile @relation(fields: [userId], references: [id])\n\n  @@index([userId])\n  @@schema(\"public\")\n}\n\nmodel UserProfile {\n  id             String          @id // gleiche UUID wie in auth.users.id\n  email          String?         @unique\n  displayName    String?\n  createdAt      DateTime        @default(now())\n  pullupSessions PullupSession[]\n\n  @@schema(\"public\")\n}\n",
-  "inlineSchemaHash": "9b126eb63c6328fd96c1041a4a37d5c3adb6561cdfbac6efbc1c737effc2956c",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"DATABASE_URL\")\n  directUrl = env(\"DIRECT_URL\")\n  schemas   = [\"public\"]\n}\n\nmodel PullupSession {\n  id        Int         @id @default(autoincrement())\n  count     Int\n  createdAt DateTime    @default(now())\n  deviceId  String?\n  userId    String // referenziert Supabase auth.users.id (UUID)\n  user      UserProfile @relation(fields: [userId], references: [id])\n\n  @@index([userId])\n  @@schema(\"public\")\n}\n\nmodel PushUps {\n  id        Int         @id @default(autoincrement())\n  count     Int\n  createdAt DateTime    @default(now())\n  deviceId  String?\n  userId    String // referenziert Supabase auth.users.id (UUID)\n  user      UserProfile @relation(fields: [userId], references: [id])\n\n  @@index([userId])\n  @@schema(\"public\")\n}\n\nmodel SitUps {\n  id        Int         @id @default(autoincrement())\n  count     Int\n  createdAt DateTime    @default(now())\n  deviceId  String?\n  userId    String // referenziert Supabase auth.users.id (UUID)\n  user      UserProfile @relation(fields: [userId], references: [id])\n\n  @@index([userId])\n  @@schema(\"public\")\n}\n\nmodel UserProfile {\n  id             String          @id // gleiche UUID wie in auth.users.id\n  email          String?         @unique\n  displayName    String?\n  createdAt      DateTime        @default(now())\n  pullupSessions PullupSession[]\n  sitUps         SitUps[]\n  pushUps        PushUps[]\n\n  @@schema(\"public\")\n}\n",
+  "inlineSchemaHash": "5992c2b3278aa1a500fa49ce2f1687f7310f5a7f46ce7f7d41e64e8c82c3076b",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"PullupSession\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"count\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deviceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"UserProfile\",\"relationName\":\"PullupSessionToUserProfile\"}],\"dbName\":null},\"UserProfile\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"displayName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"pullupSessions\",\"kind\":\"object\",\"type\":\"PullupSession\",\"relationName\":\"PullupSessionToUserProfile\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"PullupSession\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"count\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deviceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"UserProfile\",\"relationName\":\"PullupSessionToUserProfile\"}],\"dbName\":null},\"PushUps\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"count\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deviceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"UserProfile\",\"relationName\":\"PushUpsToUserProfile\"}],\"dbName\":null},\"SitUps\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"count\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deviceId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"UserProfile\",\"relationName\":\"SitUpsToUserProfile\"}],\"dbName\":null},\"UserProfile\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"displayName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"pullupSessions\",\"kind\":\"object\",\"type\":\"PullupSession\",\"relationName\":\"PullupSessionToUserProfile\"},{\"name\":\"sitUps\",\"kind\":\"object\",\"type\":\"SitUps\",\"relationName\":\"SitUpsToUserProfile\"},{\"name\":\"pushUps\",\"kind\":\"object\",\"type\":\"PushUps\",\"relationName\":\"PushUpsToUserProfile\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
