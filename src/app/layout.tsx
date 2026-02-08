@@ -2,7 +2,7 @@ import "~/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
-
+import { Analytics } from "@vercel/analytics/next"
 import { TRPCReactProvider } from "~/trpc/react";
 import ResponsiveAppBar from "./_components/navbar";
 
@@ -26,7 +26,8 @@ export default function RootLayout({
         <TRPCReactProvider>
             <ResponsiveAppBar />
             {children}
-    </TRPCReactProvider>
+            <Analytics />
+        </TRPCReactProvider>
       </body>
     </html>
   );
