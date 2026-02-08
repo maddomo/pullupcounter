@@ -1,32 +1,36 @@
 "use client";
 
 import {
-  Card,
   Typography,
   Box,
   IconButton,
   Button,
   Dialog,
   DialogContent,
+  CircularProgress,
 } from "@mui/material";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
 import Close from "@mui/icons-material/Close";
 
-export function AddPullUpsCard({
+export function AddCard({
   count,
   onIncrease,
   onDecrease,
   onSubmit,
   open,
   setOpen,
+  label,
+  loading,
 }: {
+  label: string,
   count: number;
   onIncrease: () => void;
   onDecrease: () => void;
   onSubmit: () => void;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  loading: boolean;
 }) {
   const handleClose = () => {
     setOpen(false);
@@ -79,7 +83,7 @@ export function AddPullUpsCard({
             color: "#888",
           }}
         >
-          Pull-Ups hinzufügen
+          {label} hinzufügen
         </Typography>
 
         {/* Counter */}
@@ -139,22 +143,35 @@ export function AddPullUpsCard({
         </Box>
 
         {/* Submit */}
-        <Button
-          fullWidth
-          onClick={onSubmit}
-          sx={{
-            bgcolor: "#2a2a2a",
-            color: "white",
-            height: 48,
-            fontWeight: 500,
-            letterSpacing: 0.5,
-            "&:hover": {
-              bgcolor: "#333",
-            },
-          }}
-        >
-          Absenden
-        </Button>
+      <Button
+        fullWidth
+        onClick={onSubmit}
+        disabled={loading}
+        sx={{
+          bgcolor: "#2a2a2a",
+          color: "white",
+          height: 48,
+          fontWeight: 500,
+          letterSpacing: 0.5,
+          display: "flex",
+          gap: 1.5,
+          "&:hover": {
+            bgcolor: "#333",
+          },
+          "&:disabled": {
+            bgcolor: "#1f1f1f",
+            color: "#666",
+          },
+        }}
+      >
+        {loading ? (
+          <CircularProgress size={30} sx={{ color: "#4CAF50" }} />
+        ) : (
+          "Absenden"
+                
+        )}
+      </Button>
+
       </DialogContent>
     </Dialog>
   );

@@ -1,6 +1,6 @@
 export type Period = "daily" | "weekly" | "monthly" | "yearly";
 
-export interface PullupSession {
+export interface WorkoutSession {
   count: number;
   createdAt: string;
 }

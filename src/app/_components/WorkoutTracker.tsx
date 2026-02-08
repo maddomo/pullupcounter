@@ -18,25 +18,36 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import { LineChart } from "@mui/x-charts/LineChart";
 import { useRouter } from "next/navigation";
-import { api } from "../../../trpc/react";
-import type { Period, PullupSession } from "../../_types/period";
-import { StatsCard } from "../../_components/StatsCard";
-import { AddPullUpsCard } from "./AddPullUpsCard";
+import { api } from "~/trpc/react";
+import type { Period, WorkoutSession } from "../_types/period";
+import { StatsCard } from "./StatsCard";
+import { AddCard, } from "./AddCard";
 import { supabase } from "~/supabase/client";
+import type { WorkoutConfig } from "../_configs/workouts";
 
-export default function PullUpTracker() {
-  const [period, setPeriod] = useState<Period>("weekly");
+export default function WorkoutTracker<T extends WorkoutSession>({
+    config,
+}: {
+    config: WorkoutConfig<T>,
+
+}) {
+  const [ period, setPeriod ] = useState<Period>("weekly");
   const [ openAdd, setOpenAdd ] = useState<boolean>(false);
-  const [mounted, setMounted] = useState(false);
-  const [pullUpCount, setPullUpCount] = useState<number>(0);
-  const [hasSession, setHasSession] = useState<boolean>(false);
+  const [ mounted, setMounted ] = useState(false);
+  const [ workoutCount, setWorkoutCount] = useState<number>(0);
+  const [ hasSession, setHasSession] = useState<boolean>(false);
+  const [ offset, setOffset ] = useState(0);
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md")); 
   const utils = api.useUtils();
-  const [offset, setOffset] = useState(0);
   const router = useRouter();
   const from = startOfPeriod(period, offset);
   const periodLabel = getPeriodNavigationLabel(period, from);
+
+  const { data, error, isLoading, isFetching } = api[config.key].getAll.useQuery();
+  const addMutation = api[config.key].add.useMutation();
+
 
   useEffect(() => {
     async function checkSession() {
@@ -97,7 +108,7 @@ export default function PullUpTracker() {
   }
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  function filterAndGroupPullupData(allData: PullupSession[], period: Period, offset: number): { label: string; value: number }[] {
+  function filterAndGroupPullupData(allData: WorkoutSession[], period: Period, offset: number): { label: string; value: number }[] {
     const from = startOfPeriod(period, offset);
     const to = endOfPeriod(period, offset);
   
@@ -146,24 +157,10 @@ export default function PullUpTracker() {
     }
   };
 
-  const { data: allPullups, isLoading, error } = api.pullups.getAll.useQuery(
-    undefined,
-    {
-      enabled: hasSession && mounted,
-      retry: false,
-    }
-  );
-
-  const addPullUps = api.pullups.addPullUps.useMutation({
-    onSuccess: () => {
-      void utils.pullups.getAll.invalidate();
-    }
-  });
-
   const chartData = useMemo(() => {
-    if (!allPullups) return [];
-    return filterAndGroupPullupData(allPullups, period, offset);
-  }, [allPullups, period, offset, filterAndGroupPullupData]);
+    if (!data) return [];
+    return filterAndGroupPullupData(data, period, offset);
+  }, [data, period, offset, filterAndGroupPullupData]);
 
   const stats = useMemo(() => {
     if (!chartData.length) {
@@ -183,19 +180,21 @@ export default function PullUpTracker() {
     }
   }
 
-  function handlePullUpCount(plus: boolean) {
+  function handleCount(plus: boolean) {
     if (plus) {
-      setPullUpCount(pullUpCount + 1);
+      setWorkoutCount(workoutCount + 1);
     } else {
-      setPullUpCount(pullUpCount - 1);
+      setWorkoutCount(workoutCount - 1);
     }
   }
 
-  function handlePullUpSubmit() {
-    addPullUps.mutate({ count: pullUpCount }, {
+  function handleSubmit() {
+    addMutation.mutate({ count: workoutCount }, {
       onSuccess: () => {
-        setPullUpCount(0);
-        setOpenAdd(false)
+        setWorkoutCount(0);
+        setOpenAdd(false);
+        void utils[config.key].dailyCount.invalidate();
+        void utils[config.key].getAll.invalidate();
       }
     });
   }
@@ -362,31 +361,38 @@ export default function PullUpTracker() {
         }}
       >
         {openAdd && (
-            <AddPullUpsCard
+            <AddCard
               open={openAdd}
               setOpen={setOpenAdd}
-              count={pullUpCount}
-              onIncrease={() => handlePullUpCount(true)}
-              onDecrease={() => handlePullUpCount(false)}
-              onSubmit={handlePullUpSubmit}
+              count={workoutCount}
+              onIncrease={() => handleCount(true)}
+              onDecrease={() => handleCount(false)}
+              onSubmit={handleSubmit}
+              label={config.label}
+              loading={addMutation.isPending}
             />
         )}
 
-        <Box sx={{ display: "flex", gap: 2, mb: 4, p: 2, flexWrap: "wrap" }}>
+        <Typography sx={{ fontSize: 40}}>{config.label}</Typography>
+
+        <Box sx={{ display: "flex", gap: 2, mb: 4, mt: 2, flexWrap: "wrap" }}>
           <StatsCard
             label={getPeriodLabel(period)}
             value={stats.total}
             gradient="green"
+            loading={isFetching}
           />
           <StatsCard
             label="Durchschnitt"
             value={stats.average}
             gradient="orange"
+            loading={isFetching}
           />
           <StatsCard
             label="Maximum"
             value={stats.maximum}
             gradient="blue"
+            loading={isFetching}
           />
         </Box>
 

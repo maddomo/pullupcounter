@@ -25,12 +25,38 @@ model PullupSession {
   @@schema("public")
 }
 
+model PushUps {
+  id        Int         @id @default(autoincrement())
+  count     Int
+  createdAt DateTime    @default(now())
+  deviceId  String?
+  userId    String // referenziert Supabase auth.users.id (UUID)
+  user      UserProfile @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@schema("public")
+}
+
+model SitUps {
+  id        Int         @id @default(autoincrement())
+  count     Int
+  createdAt DateTime    @default(now())
+  deviceId  String?
+  userId    String // referenziert Supabase auth.users.id (UUID)
+  user      UserProfile @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@schema("public")
+}
+
 model UserProfile {
   id             String          @id // gleiche UUID wie in auth.users.id
   email          String?         @unique
   displayName    String?
   createdAt      DateTime        @default(now())
   pullupSessions PullupSession[]
+  sitUps         SitUps[]
+  pushUps        PushUps[]
 
   @@schema("public")
 }

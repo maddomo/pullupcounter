@@ -129,6 +129,22 @@ exports.Prisma.PullupSessionScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.PushUpsScalarFieldEnum = {
+  id: 'id',
+  count: 'count',
+  createdAt: 'createdAt',
+  deviceId: 'deviceId',
+  userId: 'userId'
+};
+
+exports.Prisma.SitUpsScalarFieldEnum = {
+  id: 'id',
+  count: 'count',
+  createdAt: 'createdAt',
+  deviceId: 'deviceId',
+  userId: 'userId'
+};
+
 exports.Prisma.UserProfileScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -154,6 +170,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   PullupSession: 'PullupSession',
+  PushUps: 'PushUps',
+  SitUps: 'SitUps',
   UserProfile: 'UserProfile'
 };
 

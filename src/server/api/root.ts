@@ -1,5 +1,7 @@
 import { pullupsRouter } from "~/server/api/routers/pullup";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
+import { sitUpsRouter } from "./routers/situps";
+import { pushUpsRouter } from "./routers/pushups";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +10,8 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   pullups: pullupsRouter,
+  situps: sitUpsRouter,
+  pushUps: pushUpsRouter,
 });
 
 // export type definition of API
