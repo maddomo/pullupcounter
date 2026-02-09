@@ -49,11 +49,28 @@ model SitUps {
   @@schema("public")  
 }
 
+model DailyGoal {
+  id         Int      @id @default(autoincrement())
+  situps     Boolean
+  pullups    Boolean
+  pushups    Boolean
+  situpsCount Int
+  pullupsCount Int
+  pushupsCount Int
+  userId     String   @unique
+  user       UserProfile  @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@schema("public") 
+}
+
 model UserProfile {
   id             String          @id // gleiche UUID wie in auth.users.id
   email          String?         @unique
   displayName    String?
   createdAt      DateTime        @default(now())
+  hasDailyGoal   Boolean         @default(false)
+  dailyGoal      DailyGoal?
   pullupSessions PullupSession[]
   sitUps SitUps[]
   pushUps PushUps[]

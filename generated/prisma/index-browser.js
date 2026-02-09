@@ -145,11 +145,23 @@ exports.Prisma.SitUpsScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.DailyGoalScalarFieldEnum = {
+  id: 'id',
+  situps: 'situps',
+  pullups: 'pullups',
+  pushups: 'pushups',
+  situpsCount: 'situpsCount',
+  pullupsCount: 'pullupsCount',
+  pushupsCount: 'pushupsCount',
+  userId: 'userId'
+};
+
 exports.Prisma.UserProfileScalarFieldEnum = {
   id: 'id',
   email: 'email',
   displayName: 'displayName',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  hasDailyGoal: 'hasDailyGoal'
 };
 
 exports.Prisma.SortOrder = {
@@ -172,6 +184,7 @@ exports.Prisma.ModelName = {
   PullupSession: 'PullupSession',
   PushUps: 'PushUps',
   SitUps: 'SitUps',
+  DailyGoal: 'DailyGoal',
   UserProfile: 'UserProfile'
 };
 
